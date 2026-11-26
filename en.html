@@ -1,0 +1,811 @@
+<!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>PHOTON GLASS Lecture</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;700;900&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: plain white sheet, black type, big margins. Titles top-left in heavy gothic; grey rounded boxes for asides;
+   navy only for table headers and the selected state. Single light look on purpose (projected); colours set explicitly. */
+:root{
+  --paper:#F3F3F3; --sheet:#FAFAFA; --ink:#111111; --ink2:#4A4A4A; --line:#D0D0D0; --box:#E5E5E5;
+  --navy:#171A3B; --hi:#2F6BFF;
+  --mask:#171A3B; --copper:#171A3B; --copper-l:#FFFFFF;
+  --led-r:#D2453B; --led-g:#2E9A55; --led-b:#2F6DB5; --led-y:#D9A52B;
+  --f-head:"Inter","Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-body:"Inter","Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);overflow:hidden;
+  padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+.viewport{position:fixed;inset:0;overflow:hidden;background:var(--paper)}
+.stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:center center}
+.slide{position:absolute;inset:0;background:var(--sheet);box-sizing:border-box;padding:96px 108px 92px;display:none;flex-direction:column;gap:34px}
+.slide.active{display:flex;animation:enter .35s ease both}
+@keyframes enter{from{opacity:0}to{opacity:1}}
+.slide.dark{justify-content:center}
+.slide.title{align-items:center;justify-content:center;text-align:center}
+.eyebrow{display:none}
+h1,h2,h3{font-family:var(--f-head);margin:0;text-wrap:balance;color:var(--ink)}
+h1,h2,h3,p,li,td,th,figcaption,.tag,summary{word-break:auto-phrase}
+.info h3{text-wrap:pretty}
+.schwrap{background:#fff;border-radius:16px;border:2px solid var(--line);padding:8px;min-height:0;display:flex}
+.schwrap{overflow:hidden}.schwrap svg{width:100%;height:100%;overflow:hidden}
+.schwrap g rect{fill:rgba(47,107,255,.06);stroke:var(--hi);stroke-width:.9;rx:2;transition:opacity .2s,fill .2s}
+.schwrap g text{font:700 7px var(--f-head);fill:var(--hi)}
+.schwrap.sel g{opacity:.25}.schwrap.sel g.on{opacity:1}.schwrap g.on rect{fill:rgba(47,107,255,.16);stroke-width:1.4}
+.schlist{display:flex;flex-direction:column;gap:8px}
+.schlist button{all:unset;cursor:pointer;display:flex;gap:14px;align-items:flex-start;background:var(--box);border-radius:16px;padding:12px 18px}
+.schlist button b{font-family:var(--f-head);font-weight:900;font-size:24px;min-width:22px}
+.schlist button span{font-size:21px;font-weight:700;line-height:1.4;display:flex;flex-direction:column;gap:2px}
+.schlist button small{font-size:17px;font-weight:400;color:var(--ink2)}
+.schlist button.on{background:var(--navy);color:#fff}.schlist button.on small{color:#C9CCE0}
+.schlist button:focus-visible{outline:4px solid var(--hi);outline-offset:3px}
+.schlist button{padding:9px 16px}.schlist{gap:6px}
+.secno{font-family:var(--f-head);font-weight:900;font-size:140px;line-height:1;color:var(--ink)}
+table.t td.nw,table.t th.nw{white-space:nowrap}
+table.t.steps td{vertical-align:middle;padding:9px 16px}
+table.t.steps th{white-space:nowrap;padding:9px 16px}
+table.t.steps td.f{font-family:var(--f-mono);font-size:19px;color:var(--ink2);white-space:nowrap}
+table.t.steps td.no{font-family:var(--f-head);font-weight:900;white-space:nowrap;width:1%}
+table.t.steps td.w{font-weight:700;white-space:nowrap;width:1%}
+h1{font-size:72px;font-weight:700;line-height:1.3;letter-spacing:.01em}
+h2{font-size:48px;font-weight:900;line-height:1.25}
+h3{font-size:28px;font-weight:900;line-height:1.35}
+p,li{font-size:28px;line-height:1.6;margin:0}
+.lead{font-size:30px;line-height:1.7;color:var(--ink);max-width:1300px}
+.small{font-size:24px;line-height:1.6;color:var(--ink2)}
+.mono{font-family:var(--f-mono)}
+.row{display:flex;gap:34px;min-height:0}
+.col{display:flex;flex-direction:column;gap:18px;min-width:0}
+.grow{flex:1;min-height:0}
+.row > .card{align-self:stretch}
+.card{background:var(--box);border-radius:16px;padding:24px 28px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.tag{display:inline-block;font-family:var(--f-head);font-size:20px;font-weight:900;color:var(--ink);letter-spacing:.02em;background:none!important;padding:0}
+.tag.cu{color:var(--ink)}
+.pagehead{display:flex;flex-direction:column;gap:8px}
+.arrow{font-size:28px;line-height:1.6}
+button{font:inherit}
+.btn{white-space:nowrap;font-family:var(--f-head);font-weight:700;font-size:22px;border:2px solid var(--ink);background:var(--ink);color:#fff;border-radius:999px;padding:9px 24px;cursor:pointer;display:inline-flex;align-items:center;gap:10px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:focus-visible,.navbtn:focus-visible,.tree button:focus-visible,.pin:focus-visible,.ledsw:focus-visible,.chip:focus-visible{outline:4px solid var(--hi);outline-offset:3px}
+details.more{padding-top:4px}
+details.more summary{cursor:pointer;font-weight:700;font-size:22px;color:var(--ink2)}
+details.more p,details.more li{font-size:22px;line-height:1.6;color:var(--ink2)}
+/* 3D viewer */
+.viewer{position:relative;background:#E8EBEF;overflow:hidden;min-height:0;border-radius:16px}
+.viewer canvas{display:block;width:100%!important;height:100%!important;touch-action:none;cursor:grab}
+.viewer .hint{position:absolute;left:16px;top:12px;font-size:18px;color:var(--ink2);pointer-events:none}
+.viewer .loading{position:absolute;inset:0;display:grid;place-items:center;font-size:24px;color:var(--ink2)}
+.viewer .ctrl{position:absolute;left:16px;right:16px;bottom:14px;display:flex;gap:14px;align-items:center}
+.viewer .ctrl input[type=range]{flex:1;accent-color:var(--ink);height:28px}
+.viewer .ctrl .lbl{font-size:20px;color:var(--ink2);white-space:nowrap}
+.layerlabel{position:absolute;font-weight:700;font-size:20px;padding:3px 10px;border-radius:6px;background:rgba(17,17,17,.88);color:#fff;transform:translate(14px,-50%);white-space:nowrap;pointer-events:none;transition:opacity .3s}
+.info{background:var(--box);border-radius:16px;padding:22px 26px;display:flex;flex-direction:column;gap:10px;min-height:0;overflow:auto}
+.info .ref{font-family:var(--f-mono);font-size:19px;color:var(--ink2);font-weight:700}
+.info h3{font-size:30px}
+.info p{font-size:24px;line-height:1.6}
+.info .detail{font-size:20px;color:var(--ink2)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{font-size:19px;border:2px solid var(--line);background:#fff;border-radius:999px;padding:4px 14px;cursor:pointer;font-family:var(--f-body);color:var(--ink)}
+.chip.on{border-color:var(--navy);background:var(--navy);color:#fff}
+/* nav */
+.navbar{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:10px;padding:8px max(14px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));
+  background:linear-gradient(transparent,rgba(243,243,243,.95) 40%);opacity:.25;transition:opacity .25s;z-index:5}
+.navbar:hover,.navbar:focus-within{opacity:1}
+.navbtn{border:2px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;min-width:44px;height:40px;font-size:18px;cursor:pointer;padding:0 12px}
+.count{font-family:var(--f-mono);font-size:15px;color:var(--ink2);min-width:64px;text-align:center}
+.progress{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--copper);width:0;transition:width .3s}
+.notes{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:64px;width:min(460px,calc(100vw - 28px));max-height:45vh;overflow:auto;background:#111111;color:#E8EFE9;border-radius:12px;padding:16px 18px;font-size:15px;line-height:1.7;z-index:6;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.notes b{color:#fff}
+/* pipeline animation */
+.pipe{position:relative;flex:1;min-height:0}
+.pipe svg{width:100%;height:100%}
+.step-cap{font-size:30px;font-family:var(--f-head);font-weight:700;min-height:48px}
+/* tree */
+.tree{display:flex;flex-direction:column;gap:6px;font-family:var(--f-mono);font-size:22px}
+.tree button{all:unset;cursor:pointer;padding:6px 12px;border-radius:8px;display:flex;gap:10px;align-items:center}
+.tree button.on{background:var(--navy);color:#fff}
+.tree button .k{color:var(--ink2);font-weight:700}
+.tree button.on .k{color:#fff}
+.tree .sub{padding-left:34px}
+/* pins */
+.header40{border-radius:16px!important;display:grid;grid-template-columns:repeat(20,1fr);grid-auto-flow:column;grid-template-rows:repeat(2,1fr);gap:8px;background:#1b1f1d;padding:16px;border-radius:12px}
+.pin{all:unset;box-sizing:border-box;aspect-ratio:1;border-radius:50%;border:3px solid #6b726e;background:#2c312e;cursor:pointer;display:grid;place-items:center;font-family:var(--f-mono);font-size:14px;color:#c9d0cb}
+.pin.audio{background:var(--led-b);border-color:#8fb3e0;color:#fff}
+.pin.btn{background:#E0A030;border-color:#F2CF8A;color:#111}
+.pin.led{background:var(--led-g);border-color:#9fd6b2;color:#fff}
+.pin.pwr{background:var(--led-r);border-color:#eba39d;color:#fff}
+.pin.gnd{background:#555b57;border-color:#8a918c;color:#fff}
+.pin.on{outline:4px solid #fff;outline-offset:2px}
+.legend{display:flex;gap:22px;flex-wrap:wrap;font-size:22px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:20px;height:20px;border-radius:50%;display:inline-block}
+/* LED mixer */
+.ledsw{all:unset;cursor:pointer;width:120px;height:64px;border-radius:14px;border:3px solid var(--line);display:grid;place-items:center;font-family:var(--f-head);font-weight:900;font-size:26px;background:#fff;color:#111}
+.ledsw.on.r{background:var(--led-r);color:#fff;border-color:var(--led-r)}
+.ledsw.on.g{background:var(--led-g);color:#fff;border-color:var(--led-g)}
+.ledsw.on.b{background:var(--led-b);color:#fff;border-color:var(--led-b)}
+.ledbulb{width:170px;height:170px;border-radius:50%;background:#2a2f2c;box-shadow:inset 0 -10px 30px rgba(0,0,0,.4);transition:background .25s,box-shadow .25s}
+table.t{border-collapse:separate;border-spacing:0;width:100%;font-size:24px;background:#fff;border:2px solid var(--line);border-radius:12px;overflow:hidden}
+table.t tr:last-child td{border-bottom:0}
+table.t th:last-child,table.t td:last-child{border-right:0}
+table.t th,table.t td{text-align:left;padding:10px 16px;border:0;border-bottom:1px solid var(--line);border-right:1px solid var(--line);vertical-align:top}
+table.t th{font-family:var(--f-head);font-size:20px;font-weight:700;color:#fff;background:var(--navy);border-color:#2b2f55}
+.flow{display:flex;gap:40px;align-items:stretch}
+.flow .st{flex:1;min-width:0;background:var(--box);border-radius:16px;padding:20px 18px;display:flex;flex-direction:column;gap:8px;position:relative}
+.flow .st+.st::before{content:'▶';position:absolute;left:-31px;top:50%;transform:translateY(-50%);font-size:20px;color:var(--ink)}
+.flow .st .n{font-family:var(--f-head);font-weight:900;color:var(--ink);font-size:22px}
+.flow .st h3{font-size:26px}
+.flow .st p{font-size:20px;line-height:1.5;color:var(--ink2)}
+.flow .st .file{font-family:var(--f-mono);font-size:16px;color:var(--ink2);word-break:break-all}
+.lic{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.big{font-family:var(--f-head);font-weight:900;font-size:120px;line-height:1;color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.slide.active{animation:none}*{transition:none!important}}
+</style>
+
+<div class="viewport" id="viewport"><div class="stage" id="stage">
+
+<!-- 1 cover -->
+<section class="slide title" data-notes="This lecture covers the documentation (GitHub) and the electronics of PHOTON GLASS.<br>Drag a 3D model to rotate it; click a part to see its description.<br>← → to change slides, N to show or hide these notes, F for full screen.">
+  <div class="col" style="align-items:center;gap:26px">
+    <h1>PHOTON GLASS:<br>Documentation and Electronics</h1>
+    <p style="font-size:30px">Lecture slides</p>
+  </div>
+</section>
+
+<!-- 2 agenda -->
+<section class="slide" data-notes="Of the 40 minutes, about 30 are for the talk and the rest for questions.<br>The “More” sections are advanced; skip them if time is short.">
+  <div class="pagehead"><div class="eyebrow">Contents · 40 min</div><h2>Contents</h2></div>
+  <div class="row grow" style="align-items:stretch">
+    <div class="card" style="flex:1"><div class="big">1</div><h3>Overview</h3><p class="small">Composition, the steps up to speech output, connections between parts, the role of the Raspberry Pi.</p><p class="mono small" style="margin-top:auto">about 7 min</p></div>
+    <div class="card" style="flex:1"><div class="big">2</div><h3>The GitHub repository</h3><p class="small">Repository layout, build steps, OSS licences, and when to use GitHub vs. Scrapbox.</p><p class="mono small" style="margin-top:auto">about 8 min</p></div>
+    <div class="card" style="flex:1"><div class="big">3</div><h3>Boards and circuits</h3><p class="small">Board structure, the main board and its schematic, the 40-pin header, the audio path, the camera unit, manufacturing and extensions.</p><p class="mono small" style="margin-top:auto">about 15 min + 10 min Q&amp;A</p></div>
+  </div>
+  <p class="small">The <b>“More”</b> sections are advanced and can be skipped.</p>
+</section>
+
+<!-- 3 what -->
+<section class="slide" data-notes="The photo shows a finished PHOTON GLASS: the main unit on the left, the camera unit on the glasses on the right.<br>PHOTON GLASS is a toolkit based on OTON GLASS ver5, redesigned to be easy to build and modify.<br>The sample program reads text aloud, but the combination of camera, buttons and audio output can be repurposed.">
+  <div class="pagehead"><div class="eyebrow">1 · Overview</div><h2>What PHOTON GLASS is made of</h2></div>
+  <div class="row grow" style="align-items:stretch;gap:40px">
+    <figure style="flex:1.05;margin:0;min-height:0;position:relative;display:flex">
+      <img src="images/photon_glass.jpg" alt="PHOTON GLASS: glasses with the camera unit, and the main unit" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:16px;background:#fff">
+      <figcaption class="small" style="position:absolute;left:16px;bottom:14px;font-size:18px;line-height:1.4;color:var(--ink2);background:rgba(255,255,255,.85);padding:4px 12px;border-radius:999px">Left: main unit · Right: camera unit on the glasses</figcaption>
+    </figure>
+    <div class="col" style="flex:1;gap:12px">
+      <p style="font-size:21px;line-height:1.55">A glasses-type device that turns what a first-person camera sees into feedback such as speech. The sample program reads captured text aloud.</p>
+      <div class="card" style="padding:12px 22px;gap:2px;flex:1;justify-content:center"><span class="tag">On the glasses</span><h3>Camera unit</h3><p class="small" style="font-size:21px;line-height:1.5">Camera, shutter (camera button) and camera board. One HDMI cable connects it to the main unit.</p></div>
+      <div class="card" style="padding:12px 22px;gap:2px;flex:1;justify-content:center"><span class="tag">In a pocket or around the neck</span><h3>Main unit</h3><p class="small" style="font-size:21px;line-height:1.5">Raspberry Pi Zero 2 W and the main board. Speaker, four buttons, a status LED and a volume knob.</p></div>
+      <div class="card" style="padding:12px 22px;gap:2px;flex:1;justify-content:center"><span class="tag cu">Python</span><h3>Program</h3><p class="small" style="font-size:21px;line-height:1.5">Waits for a button, takes a photo, runs text recognition and speech synthesis through cloud APIs, and plays the result.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 pipeline animation -->
+<section class="slide" data-anim="pipeline" data-notes="Press play to step through what happens from the camera button to speech.<br>Watch the LED colour change with the state (green = idle, yellow = communicating, blue = speaking).<br>Text recognition and speech synthesis run on Google Cloud (Vision API, Text-to-Speech API), not on the Raspberry Pi, so a network connection is required.">
+  <div class="pagehead"><div class="eyebrow">1 · Overview · animation</div><h2>From button press to speech</h2></div>
+  <div class="row" style="align-items:center;gap:20px">
+    <button class="btn" data-play>▶ Play</button>
+    <div class="step-cap" data-cap>Press play to step through the process</div>
+  </div>
+  <div class="pipe"><svg viewBox="0 0 1424 560" aria-label="Flow from the camera button to speech" role="img">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#4A4A4A"/></marker></defs>
+    <g font-family="Noto Sans JP, sans-serif" font-weight="700" font-size="26" fill="#111111">
+      <g data-node="0"><rect x="20" y="60" width="200" height="150" rx="16" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="120" y="122" text-anchor="middle">Camera button</text><text x="120" y="162" text-anchor="middle" font-size="20" fill="#4A4A4A">press</text></g>
+      <g data-node="1"><rect x="300" y="60" width="200" height="150" rx="16" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="400" y="122" text-anchor="middle">Capture</text><text x="400" y="162" text-anchor="middle" font-size="20" fill="#4A4A4A">camera → Pi</text></g>
+      <g data-node="2"><rect x="580" y="60" width="260" height="150" rx="16" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="710" y="122" text-anchor="middle">Read text</text><text x="710" y="162" text-anchor="middle" font-size="20" fill="#4A4A4A">Google Vision API</text></g>
+      <g data-node="3"><rect x="920" y="60" width="240" height="150" rx="16" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="1040" y="122" text-anchor="middle">Make speech</text><text x="1040" y="162" text-anchor="middle" font-size="20" fill="#4A4A4A">Text-to-Speech API</text></g>
+      <g data-node="4"><rect x="1220" y="60" width="190" height="150" rx="16" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="1315" y="122" text-anchor="middle">Speak</text><text x="1315" y="162" text-anchor="middle" font-size="20" fill="#4A4A4A">Speaker</text></g>
+    </g>
+    <g stroke="#4A4A4A" stroke-width="3" fill="none" marker-end="url(#ah)"><path d="M224 135H294"/><path d="M504 135H574"/><path d="M844 135H914"/><path d="M1164 135H1214"/></g>
+    <rect x="560" y="240" width="620" height="56" rx="10" fill="none" stroke="#2F6DB5" stroke-width="3" stroke-dasharray="10 8"/>
+    <text x="870" y="277" text-anchor="middle" font-family="Noto Sans JP, sans-serif" font-size="22" fill="#2F6DB5">In the cloud (Wi-Fi required)</text>
+    <circle data-dot r="14" cx="120" cy="135" fill="#171A3B" opacity="0" style="display:none"/>
+    <g transform="translate(150 360)">
+      <text x="0" y="0" font-family="Noto Sans JP, sans-serif" font-weight="700" font-size="26" fill="#111111">Main-unit LED</text>
+      <circle data-led cx="60" cy="90" r="52" fill="#2E9A55"/>
+      <text data-ledtxt x="140" y="100" font-family="Noto Sans JP, sans-serif" font-size="28" fill="#111111">Green: idle (ready)</text>
+    </g>
+    <g transform="translate(760 360)" font-family="Noto Sans JP, sans-serif" font-size="22" fill="#4A4A4A">
+      <text x="0" y="0" font-family="Noto Sans JP, sans-serif" font-weight="700" font-size="26" fill="#111111">Sound effect</text>
+      <text data-snd x="0" y="56" font-size="28" fill="#111111">—</text>
+      <text x="0" y="110">wav files in sound/</text>
+    </g>
+  </svg></div>
+</section>
+
+<!-- 5 system map -->
+<section class="slide" data-notes="Connections between parts. Two key points.<br>① The main board is an expansion board stacked on the Raspberry Pi’s 40-pin header (like a HAT).<br>② Camera signals enter the main board through the FFC and travel to the camera unit over the HDMI cable (HDMI is used as general-purpose wiring, not for video).">
+  <div class="pagehead"><div class="eyebrow">1 · Overview</div><h2>How the parts connect</h2></div>
+  <div class="row grow">
+    <svg viewBox="0 0 1424 600" style="width:100%;height:100%" role="img" aria-label="System connection diagram">
+      <defs><marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#111111"/></marker></defs>
+      <g font-family="Noto Sans JP, sans-serif" font-weight="700">
+        <rect x="40" y="40" width="760" height="520" rx="24" fill="#F0F0F0" stroke="#D0D0D0" stroke-width="3" stroke-dasharray="12 10"/>
+        <text x="70" y="88" font-size="28" fill="#4A4A4A">Main unit</text>
+        <rect x="90" y="120" width="300" height="150" rx="14" fill="#111111"/><text x="240" y="186" text-anchor="middle" fill="#fff" font-size="28">Raspberry Pi</text><text x="240" y="226" text-anchor="middle" fill="#BBBBBB" font-size="22">Zero 2 W</text>
+        <rect x="90" y="340" width="660" height="180" rx="14" fill="#171A3B"/><text x="420" y="400" text-anchor="middle" fill="#fff" font-size="30">Main board</text>
+        <text x="420" y="446" text-anchor="middle" fill="#C9CCE0" font-size="21" font-family="Noto Sans JP, sans-serif">Audio (DAC, amp) / 4 buttons / RGB LED / volume</text>
+        <text x="420" y="484" text-anchor="middle" fill="#C9CCE0" font-size="21" font-family="Noto Sans JP, sans-serif">Headphone jack / HDMI connector / power connector</text>
+        <rect x="470" y="120" width="280" height="150" rx="14" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="610" y="186" text-anchor="middle" font-size="26" fill="#111111">Speaker</text><text x="610" y="226" text-anchor="middle" font-size="20" fill="#4A4A4A" font-family="Noto Sans JP, sans-serif">SPK connector</text>
+        <rect x="960" y="70" width="420" height="230" rx="24" fill="#F0F0F0" stroke="#D0D0D0" stroke-width="3" stroke-dasharray="12 10"/>
+        <text x="990" y="116" font-size="28" fill="#4A4A4A">Camera unit</text>
+        <rect x="990" y="140" width="170" height="130" rx="12" fill="#5A5A5A"/><text x="1075" y="214" text-anchor="middle" fill="#fff" font-size="24">Camera</text>
+        <rect x="1180" y="140" width="170" height="130" rx="12" fill="#171A3B"/><text x="1265" y="198" text-anchor="middle" fill="#fff" font-size="22">Camera board</text><text x="1265" y="232" text-anchor="middle" fill="#C9CCE0" font-size="18" font-family="Noto Sans JP, sans-serif">Buttons, LED</text>
+        <rect x="960" y="400" width="420" height="120" rx="14" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="1170" y="456" text-anchor="middle" font-size="26" fill="#111111">Mobile battery</text><text x="1170" y="492" text-anchor="middle" font-size="20" fill="#4A4A4A" font-family="Noto Sans JP, sans-serif">USB → 5V connector</text>
+      </g>
+      <g font-family="Noto Sans JP, sans-serif" font-size="20" fill="#111111" stroke-width="5" fill-opacity="1">
+        <path d="M240 270V340" stroke="#171A3B" marker-start="url(#ah2)" marker-end="url(#ah2)"/><text x="252" y="312">40-pin</text>
+        <path d="M150 270C150 300 130 320 130 340" stroke="#2F6DB5" fill="none" stroke-dasharray="10 6"/><text x="122" y="312" text-anchor="end" fill="#2F6DB5">FFC</text>
+        <path d="M610 340V274" stroke="#111111" marker-end="url(#ah2)"/>
+        <path d="M750 370H1215C1250 370 1265 355 1265 330V282" stroke="#171A3B" fill="none" marker-end="url(#ah2)"/><text x="820" y="356" font-weight="700">HDMI cable</text>
+        <path d="M1160 205H1180" stroke="#111111"/>
+        <path d="M960 470H760" stroke="#C8423A" marker-end="url(#ah2)"/><text x="880" y="502" fill="#C8423A">5V</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- 6 raspberry pi -->
+<section class="slide" data-notes="The Raspberry Pi Zero 2 W is the computer that does all of PHOTON GLASS’s processing.<br>The OS is Raspberry Pi OS (32-bit). setup_pi.sh configures audio output (hifiberry-dac), the required libraries and the autostart service in one go.<br>With only 512 MB of RAM, the desktop is disabled.">
+  <div class="pagehead"><div class="eyebrow">1 · Raspberry Pi</div><h2>The role of the Raspberry Pi Zero 2 W</h2></div>
+  <div class="row" style="align-items:stretch">
+    <div class="card" style="flex:1;gap:14px">
+      <h3>Specifications (as used in PHOTON GLASS)</h3>
+      <table class="t" style="font-size:21px">
+        <tr><th class="nw">Item</th><th>Details</th></tr>
+        <tr><td class="nw">SoC</td><td>RP3A0 (quad-core Arm Cortex-A53, 1 GHz)</td></tr>
+        <tr><td class="nw">Memory</td><td>512 MB</td></tr>
+        <tr><td class="nw">Wireless</td><td>Wi-Fi 2.4 GHz (802.11 b/g/n), Bluetooth 4.2</td></tr>
+        <tr><td class="nw">Camera port</td><td>CSI-2 (22-pin FFC)</td></tr>
+        <tr><td class="nw">40-pin header</td><td>GPIO, I2S, I2C, power</td></tr>
+        <tr><td class="nw">Storage</td><td>microSD (OS and program)</td></tr>
+        <tr><td class="nw">Size</td><td>65 × 30 mm</td></tr>
+      </table>
+    </div>
+    <div class="card" style="flex:1;gap:14px">
+      <h3>What it does</h3>
+      <table class="t" style="font-size:21px">
+        <tr><th class="nw">Task</th><th>How</th></tr>
+        <tr><td class="nw">Autostart</td><td>the systemd service (photonglass) starts <span class="mono">main_async.py</span></td></tr>
+        <tr><td class="nw">Capture</td><td>picamera2 (libcamera)</td></tr>
+        <tr><td class="nw">Buttons, LED</td><td>GPIO read/write with gpiozero</td></tr>
+        <tr><td class="nw">Audio out</td><td>I2S to the DAC (<span class="mono">dtoverlay=hifiberry-dac</span>)</td></tr>
+        <tr><td class="nw">Network</td><td>Calls Google Cloud APIs over Wi-Fi</td></tr>
+        <tr><td class="nw">Remote access</td><td>SSH (<span class="mono">photonXX.local</span>)</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 7 section -->
+<section class="slide dark" data-notes="Now the GitHub documentation. Build steps, fixes and terms of use are all collected here.<br>Knowing the layout first makes it clear which data to look at in the board section that follows.">
+  <div class="eyebrow">2</div>
+  <div class="col grow" style="justify-content:center;gap:30px">
+    <div class="secno">2</div>
+    <h1>The GitHub repository</h1>
+    <p class="lead">Design data, programs and instructions are published in a single repository.<br>Once you know its layout, you can build and modify the device on your own.</p>
+    <p class="mono" style="font-size:28px">github.com/photonglass/photonglass</p>
+  </div>
+</section>
+
+<!-- 8 repo map -->
+<section class="slide" data-notes="Click a folder to see its contents and when to use it.<br>Start with README.md and docs/BUILD_GUIDE.md.">
+  <div class="pagehead"><div class="eyebrow">2 · Repository map</div><h2>Repository layout</h2></div>
+  <div class="row grow">
+    <div class="card" style="flex:1;padding:18px 16px">
+      <div class="tree" data-tree>
+        <button data-k="readme"><span class="k">▸</span>README.md</button>
+        <button data-k="docs"><span class="k">▸</span>docs/</button>
+        <button data-k="hardware"><span class="k">▸</span>hardware/</button>
+        <div class="sub"><button data-k="mainb"><span class="k">·</span>main-board/</button><button data-k="camb"><span class="k">·</span>camera-board/</button></div>
+        <button data-k="enclosure"><span class="k">▸</span>enclosure/</button>
+        <div class="sub"><button data-k="mbody"><span class="k">·</span>main-body/</button><button data-k="cunit"><span class="k">·</span>camera-unit/</button><button data-k="usb"><span class="k">·</span>usb-power-cable/</button></div>
+        <button data-k="software"><span class="k">▸</span>software/</button>
+        <button data-k="charter"><span class="k">▸</span>CHARTER.md · LICENSE</button>
+      </div>
+    </div>
+    <div class="info" style="flex:1.3" data-treeinfo><div class="ref">Click a folder</div><h3>Select a folder to see its contents</h3><p>If unsure, start with <span class="mono">README.md</span> and <span class="mono">docs/BUILD_GUIDE.md</span>.</p></div>
+  </div>
+</section>
+
+<!-- 9 build order -->
+<section class="slide" data-notes="This follows BUILD_GUIDE.md: which document to read at each step.<br>Raspberry Pi setup is in SETUP_RASPBERRY_PI.md; setup_pi.sh automates most of it.">
+  <div class="pagehead"><div class="eyebrow">2 · docs/BUILD_GUIDE.md</div><h2>Build steps and the documents to read</h2></div>
+  <table class="t steps" style="font-size:22px"><tr><th>Step</th><th>Task</th><th>Details</th><th>File to read</th></tr>
+    <tr><td class="no">0</td><td class="w">Gather</td><td>Parts, Raspberry Pi, cables, battery</td><td class="f">docs/BUILD_GUIDE.md</td></tr>
+    <tr><td class="no">1–2</td><td class="w">Boards</td><td>Order from JLCPCB, hand-solder 7 parts</td><td class="f">hardware/JLCPCB_ORDERING.md</td></tr>
+    <tr><td class="no">3</td><td class="w">Print</td><td>Print the enclosures in PETG on a Bambu Lab A1</td><td class="f">enclosure/*/README.md</td></tr>
+    <tr><td class="no">4</td><td class="w">Assemble</td><td>Always check +/− on the power cable</td><td class="f">enclosure/usb-power-cable/README.md</td></tr>
+    <tr><td class="no">5</td><td class="w">Set up the Pi</td><td>OS, audio, program, API key (mostly automated by setup_pi.sh)</td><td class="f">docs/SETUP_RASPBERRY_PI.md</td></tr>
+    <tr><td class="no">6</td><td class="w">Test</td><td>LED → buttons → speaker → camera</td><td class="f">software/test/hw_test.py</td></tr>
+    <tr><td class="no">7</td><td class="w">Run</td><td>Starts automatically at power-on</td><td class="f">software/main_async.py</td></tr>
+  </table>
+  <div class="row" style="flex-shrink:0">
+    <div class="card" style="flex:1;align-self:stretch"><h3>If it does not work</h3><p class="small"><span class="mono">check_setup.sh</span> checks the setup. If that does not solve it, ask in GitHub <b>Issues</b>.</p></div>
+    <div class="card" style="flex:1;align-self:stretch"><h3>Never publish the API key</h3><p class="small"><span class="mono">api_key.txt</span> is created by each builder. Keep it off GitHub and social media. It is also included in SD card images.</p></div>
+  </div>
+</section>
+
+<!-- 10 license -->
+<section class="slide" data-notes="All three licences are share-alike (copyleft). Building, selling and modifying are free, but anything you distribute must use the same licence and state the source and the changes.">
+  <div class="pagehead"><div class="eyebrow">2 · Licences</div><h2>Rules of open source</h2></div>
+  <div class="lic">
+    <div class="card"><span class="tag">Hardware</span><h3>CERN-OHL-S v2</h3><p class="small">Board and enclosure design data. Also printed on the board silkscreen.</p></div>
+    <div class="card"><span class="tag">Software</span><h3>GPL-3.0</h3><p class="small"><span class="mono">software/</span> programs.</p></div>
+    <div class="card"><span class="tag cu">Docs, images, sounds</span><h3>CC BY-SA 4.0</h3><p class="small">READMEs, photos, sound effects, etc.</p></div>
+  </div>
+  <div class="row">
+    <div class="card" style="flex:1"><h3>You may</h3><ul style="padding-left:1.2em"><li class="small">Build, use and sell it, free of charge</li><li class="small">Modify it freely</li></ul></div>
+    <div class="card" style="flex:1"><h3>You must</h3><ul style="padding-left:1.2em"><li class="small">When distributing or selling, publish the design data under the same licence</li><li class="small">Keep the copyright and licence notices, and state what you changed</li></ul></div>
+  </div>
+  <p class="small">Personal use alone does not oblige you to publish your changes. Check the full licence texts for the exact terms.</p>
+</section>
+
+<!-- 11 github vs scrapbox -->
+<section class="slide" data-notes="Information lives in two places. Ask: is it needed to build or fix PHOTON GLASS (→ GitHub), or only to run this class (→ Scrapbox)?<br>Never put passwords, API keys, Wi-Fi details or IP addresses on the public GitHub.">
+  <div class="pagehead"><div class="eyebrow">2 · Where information goes</div><h2>GitHub vs. Scrapbox</h2></div>
+  <table class="t" style="font-size:22px">
+    <tr><th class="nw"></th><th>GitHub (photonglass/photonglass)</th><th>Scrapbox (class projects)</th></tr>
+    <tr><td class="nw"><b>Visibility</b></td><td>Public (anyone can read it)</td><td>Private (members only)</td></tr>
+    <tr><td class="nw"><b>Contents</b></td><td>Design data, programs, build and setup guides, licences</td><td>Class preparation and running order, network and access details, notes for students</td></tr>
+    <tr><td class="nw"><b>How it is updated</b></td><td>Changes go on a branch and are reviewed in a pull request before merging into main. Full history is kept</td><td>Members edit pages directly. Suited to information that changes every class</td></tr>
+    <tr><td class="nw"><b>Questions, reports</b></td><td>Bugs and suggestions go to Issues</td><td>Class announcements, problems on the day</td></tr>
+    <tr><td class="nw"><b>Never write</b></td><td>Passwords, API keys, Wi-Fi names and passwords, IP addresses</td><td>(Allowed, since it is private — but never copy them to GitHub)</td></tr>
+  </table>
+  <div class="card"><h3>Rule of thumb</h3><p class="small">If everyone who builds or fixes PHOTON GLASS needs it, it goes on GitHub. If it only serves this class, it goes on Scrapbox.</p></div>
+</section>
+
+<!-- 12 section -->
+<section class="slide dark" data-notes="Now the boards and circuits, the longest part.<br>We follow the hardware/ data through the actual parts and the schematic.">
+  <div class="eyebrow">3</div>
+  <div class="col grow" style="justify-content:center;gap:30px">
+    <div class="secno">3</div>
+    <h1>Boards and<br>circuits</h1>
+    <p class="lead">Copper traces on the board wire the parts together.<br>We trace where signals and power flow, in both the schematic and the hardware.</p>
+  </div>
+</section>
+
+<!-- 13 layers -->
+<section class="slide" data-notes="Press play to separate the main board into layers. From the bottom: FR-4 (substrate), copper (traces), solder mask, silkscreen, components.<br>The green colour is the solder mask protecting the copper, not the substrate.<br>This is a 2-layer board; the two sides are connected by vias.">
+  <div class="pagehead"><div class="eyebrow">3 · Boards · animation</div><h2>Layers of a circuit board</h2></div>
+  <div class="row grow">
+    <div class="viewer" style="flex:1.6" data-model="main_board" data-mode="layers"><div class="loading">Loading 3D…</div><div class="hint">Drag to rotate</div>
+      <div class="ctrl"><button class="btn" data-play>▶ Separate</button><span class="lbl">Stacked</span><input type="range" min="0" max="1000" value="0" aria-label="Layer separation" data-slider><span class="lbl">Separated</span></div></div>
+    <div class="col" style="flex:1;gap:10px">
+      <div class="card" style="padding:12px 20px;gap:4px"><span class="tag cu">Components</span><p class="small" style="font-size:21px;line-height:1.5">ICs, connectors, resistors, etc. JLCPCB places and solders them (7 are hand-soldered).</p></div>
+      <div class="card" style="padding:12px 20px;gap:4px"><span class="tag" style="background:#E8EAE6;color:#111111">Silkscreen</span><p class="small" style="font-size:21px;line-height:1.5">White lettering: reference designators (R1, CN3…) and orientation marks.</p></div>
+      <div class="card" style="padding:12px 20px;gap:4px"><span class="tag">Solder mask</span><p class="small" style="font-size:21px;line-height:1.5">Green coating that prevents copper oxidation and solder bridging.</p></div>
+      <div class="card" style="padding:12px 20px;gap:4px"><span class="tag cu">Copper</span><p class="small" style="font-size:21px;line-height:1.5">The wiring itself. Two layers, top and bottom, joined by vias (small holes).</p></div>
+      <div class="card" style="padding:12px 20px;gap:4px"><span class="tag">Substrate (FR-4)</span><p class="small" style="font-size:21px;line-height:1.5">Glass fibre and resin, 1.6 mm thick.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 main board interactive -->
+<section class="slide" data-notes="Click parts, or use the buttons below.<br>Four key parts: the 40-pin socket (to the Pi), PCM5102A (digital to analogue audio), PAM8304 (amplifier) and the HDMI connector (to the camera).<br>Only the main button is on the bottom side.">
+  <div class="pagehead"><div class="eyebrow">3 · Main board OG19AWv2 · 79 × 42 mm</div><h2>Key parts of the main board</h2></div>
+  <div class="row grow">
+    <div class="viewer" style="flex:1.5" data-model="main_board" data-mode="pick" data-info="#info-main"><div class="loading">Loading 3D…</div><div class="hint">Click a part / drag to rotate</div></div>
+    <div class="col" style="flex:1">
+      <div class="info" id="info-main"><div class="ref">Click to select</div><h3>Click a part for its description</h3><p>Drag to rotate; scroll or pinch to zoom.</p></div>
+      <div class="chips" data-chips="#info-main">
+        <button class="chip" data-pick="part_U_1">40-pin</button><button class="chip" data-pick="part_PCM5102A">DAC</button><button class="chip" data-pick="part_PAM8304">Amp</button><button class="chip" data-pick="part_CN3">HDMI</button><button class="chip" data-pick="part_CN2">FFC</button><button class="chip" data-pick="part_CN1">Earphones</button><button class="chip" data-pick="part_U_3">LED</button><button class="chip" data-pick="part_VR1">Volume</button><button class="chip" data-pick="part_SW_MAIN">Main button</button><button class="chip" data-pick="part_5V">Power</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 schematic -->
+<section class="slide" data-anim="sch" data-notes="The KiCad schematic (hardware/main-board/kicad/). Select an item on the right to zoom in on that area.<br>Following the audio path is easiest: ① 40-pin (Raspberry Pi) → ④ DAC → ⑤ volume, earphones → ⑥ amplifier.<br>Wires with the same net label (BCK, LRCK, DIN, …) are connected.">
+  <div class="pagehead"><div class="eyebrow">3 · Schematic</div><h2>Main board schematic</h2></div>
+  <div class="row grow" style="align-items:stretch">
+    <div class="schwrap" style="flex:1.75">
+      <svg viewBox="0 0 341.173 264.947" role="img" aria-label="Main board schematic" data-sch>
+        <image href="images/main_schematic.svg" x="0" y="0" width="341.173" height="264.947"/>
+        <g data-blk="1"><rect x="68" y="18" width="142" height="92"/><text x="72" y="30">1</text></g>
+        <g data-blk="2"><rect x="214" y="16" width="44" height="70"/><text x="218" y="28">2</text></g>
+        <g data-blk="3"><rect x="14" y="104" width="100" height="86"/><text x="18" y="116">3</text></g>
+        <g data-blk="4"><rect x="122" y="108" width="114" height="68"/><text x="126" y="120">4</text></g>
+        <g data-blk="5"><rect x="70" y="192" width="122" height="54"/><text x="74" y="204">5</text></g>
+        <g data-blk="6"><rect x="226" y="182" width="104" height="60"/><text x="230" y="194">6</text></g>
+      </svg>
+    </div>
+    <div class="col" style="flex:1;gap:8px">
+      <div class="schlist" data-schlist>
+        <button data-b="1"><b>1</b><span>Camera wiring (CN2, CN3)<small>Passes the FFC signals straight through to the HDMI connector</small></span></button>
+        <button data-b="2"><b>2</b><span>Buttons (SW_MAIN, SUB, UP, DOWN)<small>Pressing connects the signal line to GND</small></span></button>
+        <button data-b="3"><b>3</b><span>40-pin header and RGB LED<small>GPIO assignment, LED and current-limiting resistors</small></span></button>
+        <button data-b="4"><b>4</b><span>DAC (PCM5102A)<small>Converts I2S (BCK, LRCK, DIN) to analogue audio</small></span></button>
+        <button data-b="5"><b>5</b><span>Volume (VR1) and earphone jack (CN1)<small>A switch cuts the path to the amp when a plug is inserted</small></span></button>
+        <button data-b="6"><b>6</b><span>Amplifier (PAM8304) and speaker<small>A class-D amplifier drives the speaker</small></span></button>
+      </div>
+      <p class="small" style="font-size:18px;margin-top:auto">Wires with the same label (BCK, SW_CAM, …) are connected even when drawn far apart.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 16 header pins -->
+<section class="slide" data-anim="pins" data-notes="PHOTON GLASS uses only the coloured pins.<br>Note that GPIO (BCM) numbers in the code differ from physical pin numbers.<br>Example: the camera button is physical pin 11 = GPIO17.">
+  <div class="pagehead"><div class="eyebrow">3 · 40-pin header</div><h2>40-pin header assignment</h2></div>
+  <div class="legend"><span><i style="background:var(--led-b)"></i>Audio (I2S)</span><span><i style="background:#E0A030"></i>Buttons</span><span><i style="background:var(--led-g)"></i>LED</span><span><i style="background:var(--led-r)"></i>Power</span><span><i style="background:#555b57"></i>GND (0 V)</span><span><i style="background:#2c312e;border:2px solid #6b726e"></i>Unused</span></div>
+  <div class="header40" data-header></div>
+  <div class="row grow">
+    <div class="info" style="flex:1" data-pininfo><div class="ref">Click a pin</div><h3>Click a pin to see its role</h3><p>Top row even, bottom row odd. Pins 1 and 2 are at the left.</p></div>
+    <div class="card" style="flex:1"><h3>In the code</h3><p class="mono" style="font-size:22px;line-height:1.7">camera_button = Button(17)<br>sub_button = Button(22)<br>red_LED = LED(9)</p><p class="small">Arguments are GPIO (BCM) numbers, not physical pin numbers.</p></div>
+  </div>
+</section>
+
+<!-- 17 audio path -->
+<section class="slide" data-anim="audio" data-notes="Inside the Raspberry Pi, audio is digital data.<br>The DAC (PCM5102A) converts it to an analogue signal, which passes the volume control (VR1) to the earphone jack.<br>With no earphones plugged in, a switch inside the jack routes it to the amplifier (PAM8304), which boosts it enough to drive the speaker.<br>That switch is why the speaker goes silent when earphones are plugged in.">
+  <div class="pagehead"><div class="eyebrow">3 · Circuit · animation</div><h2>The audio signal path</h2></div>
+  <div class="row" style="gap:16px;align-items:center"><button class="btn" data-play>▶ Play</button><button class="btn ghost" data-toggle-jack>Plug in earphones</button><span class="small" data-jackstate>Now: no earphones → speaker plays</span></div>
+  <div class="grow" style="position:relative"><canvas data-audio style="width:100%;height:100%;display:block"></canvas></div>
+  <details class="more"><summary>More</summary><p>Pi → DAC uses three I2S lines: BCK (bit clock) = physical pin 12, LRCK (left/right clock) = 35, DIN (data) = 40. The PAM8304 is a class-D amplifier: it amplifies by fast switching, so little power is lost as heat.</p></details>
+</section>
+
+<!-- 18 camera board + HDMI -->
+<section class="slide" data-anim="hdmi" data-notes="The camera board (39.3 × 17.2 mm) carries the HDMI connector, the camera FFC connector, the shutter button and an LED.<br>An HDMI cable contains twisted pairs. Camera signals (MIPI CSI-2) are also differential pairs, so they can reuse them. No video is output.<br>The remaining wires carry the button, the LED and 3.3 V.">
+  <div class="pagehead"><div class="eyebrow">3 · Camera board OG19 PC · 39.3 × 17.2 mm</div><h2>How the camera unit works</h2></div>
+  <div class="row grow">
+    <div class="col" style="flex:1">
+      <div class="viewer grow" data-model="camera_board" data-mode="pick" data-info="#info-cam"><div class="loading">Loading 3D…</div><div class="hint">Click a part</div></div>
+      <div class="info" id="info-cam" style="max-height:230px"><div class="ref">Click to select</div><h3>Click a part for its description</h3></div>
+    </div>
+    <div class="card" style="flex:1.15;gap:8px">
+      <h3>What each HDMI wire carries</h3>
+      <table class="t" style="font-size:21px"><tr><th class="nw">HDMI pins</th><th>Original use</th><th>In PHOTON GLASS</th></tr>
+        <tr><td class="mono nw">1·3<br>4·6<br>7·9</td><td>Video data pairs</td><td><b>Camera image</b> (2 data + clock)</td></tr>
+        <tr><td class="mono nw">10·12</td><td>Clock pair</td><td>Camera power-on, LED</td></tr>
+        <tr><td class="mono nw">13·15</td><td>CEC, SCL</td><td>Camera configuration (I2C)</td></tr>
+        <tr><td class="mono nw">16</td><td>SDA</td><td><b>Camera button</b> → GPIO17</td></tr>
+        <tr><td class="mono nw">14</td><td>Reserved</td><td>Camera board LED</td></tr>
+        <tr><td class="mono nw">18</td><td>+5V</td><td>3.3 V supply</td></tr></table>
+      <p class="small">HDMI is not used for video, but as general-purpose wiring that includes differential pairs.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 19 how boards are made -->
+<section class="slide" data-notes="From design data to delivered boards.<br>Design in KiCad (free) or Fusion. Generate Gerbers (one drawing per layer), a bill of materials (BOM) and placement data (CPL), and JLCPCB fabricates the boards and mounts the parts.<br>Seven parts — buttons, volume knob and connectors — are hand-soldered.">
+  <div class="pagehead"><div class="eyebrow">3 · Manufacturing</div><h2>From design data to finished boards</h2></div>
+  <table class="t steps" style="font-size:22px"><tr><th>Step</th><th>Task</th><th>Details</th><th>Files</th></tr>
+    <tr><td class="no">01</td><td class="w">Design schematic and board</td><td>KiCad 9 or later, or Fusion (Eagle format)</td><td class="f">hardware/*/kicad/</td></tr>
+    <tr><td class="no">02</td><td class="w">Generate Gerbers</td><td>One drawing per layer (copper, mask, silkscreen, drills, outline)</td><td class="f">hardware/*/gerber/</td></tr>
+    <tr><td class="no">03</td><td class="w">BOM and placement</td><td>BOM (what) and CPL (where, which orientation)</td><td class="f">hardware/*/jlcpcb-assembly/</td></tr>
+    <tr><td class="no">04</td><td class="w">Order from JLCPCB</td><td>Fabrication and assembly; arrives in a few weeks</td><td class="f">hardware/JLCPCB_ORDERING.md</td></tr>
+    <tr><td class="no">05</td><td class="w">Hand-solder 7 parts</td><td>Volume knob, 4 buttons, power and speaker connectors</td><td class="f">docs/parts_list.md</td></tr>
+  </table>
+  <div class="row">
+    <div class="card" style="flex:1"><h3>Obsolete parts replaced</h3><p class="small">Some parts in the original 2019 design are no longer available. They were replaced with current parts, and every pinout was checked against its datasheet (0 mismatches).</p></div>
+    <div class="card" style="flex:1"><h3>Revision is on the silkscreen</h3><p class="small">Main board <b class="mono">2026 / PB-4</b>, camera board <b class="mono">2026 / PC-4</b>. Check the silkscreen to see which revision you have.</p></div>
+  </div>
+</section>
+
+<!-- 20 hack -->
+<section class="slide" data-notes="Where to start extending. The easiest is to give the unused buttons (main, up, down) a function.<br>Reading main_seq.py (the sequential version) first makes the code easier to follow.<br>photonglass-reset restores the original state after any change.<br>Leave time for questions at the end.">
+  <div class="pagehead"><div class="eyebrow">3 · Extending</div><h2>Room for extension</h2></div>
+  <div class="row">
+    <div class="card" style="flex:1"><span class="tag cu">Buttons</span><h3>Three unused buttons</h3><p class="small">Main (GPIO27), up (GPIO23) and down (GPIO24) are unused by the current program. Assign them to, for example, repeat or change speaking speed.</p></div>
+    <div class="card" style="flex:1"><span class="tag">Program</span><h3>Read main_seq.py first</h3><p class="small">The sequential version does one step at a time and is easy to follow. What actually runs is the asynchronous version, which responds to buttons mid-process: <span class="mono">main_async.py</span>.</p></div>
+    <div class="card" style="flex:1"><span class="tag">Enclosure</span><h3>Parametric enclosure</h3><p class="small">The camera unit is defined in <span class="mono">src/camera_case.py</span> (CadQuery). Change dimensions and rerun to regenerate every part.</p></div>
+  </div>
+  <div class="card"><h3>Changes can be undone</h3><p class="small">If a change breaks the program, run <span class="mono">photonglass-reset</span> on the Raspberry Pi to restore the original (changed files are kept in a backup folder).</p></div>
+</section>
+
+</div></div>
+
+<nav class="navbar" aria-label="Slide controls">
+  <button class="navbtn" id="prev" aria-label="Previous slide">←</button>
+  <span class="count" id="count">1 / 21</span>
+  <button class="navbtn" id="next" aria-label="Next slide">→</button>
+  <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+  <button class="navbtn" id="langBtn" onclick="location.href='index.html'+location.hash" aria-label="日本語版">日本語</button>
+  <button class="navbtn" id="notesBtn" aria-pressed="false">Notes (N)</button>
+  <button class="navbtn" id="fsBtn">Full screen (F)</button>
+</nav>
+<div class="notes" id="notes" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+(()=>{
+'use strict';
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+/* ---------------- deck ---------------- */
+const stage=$('#stage'), slides=$$('.slide'); let cur=0;
+function fit(){const vw=innerWidth,vh=innerHeight-0;const s=Math.min(vw/1600,vh/900);stage.style.transform=`translate(-50%,-50%) scale(${s})`;viewer.resize();}
+function go(i,push=true){
+  i=clamp(i,0,slides.length-1); slides[cur].classList.remove('active'); stopAnims(slides[cur]);
+  cur=i; const el=slides[cur]; el.classList.add('active');
+  $('#count').textContent=`${cur+1} / ${slides.length}`; $('#bar').style.width=((cur+1)/slides.length*100)+'%';
+  $('#notes').innerHTML=el.dataset.notes||'(no notes)';
+  if(push){try{history.replaceState(null,'','#slide-'+(cur+1))}catch(e){}}
+  viewer.attach(el); startAnims(el);
+}
+$('#prev').onclick=()=>go(cur-1); $('#next').onclick=()=>go(cur+1);
+const toggleNotes=()=>{const n=$('#notes');n.hidden=!n.hidden;$('#notesBtn').setAttribute('aria-pressed',String(!n.hidden))};
+$('#notesBtn').onclick=toggleNotes;
+const toggleFs=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}};
+$('#fsBtn').onclick=toggleFs;
+addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea'))return;
+  const k=e.key;
+  if(['ArrowRight','PageDown',' '].includes(k)){e.preventDefault();go(cur+1)}
+  else if(['ArrowLeft','PageUp'].includes(k)){e.preventDefault();go(cur-1)}
+  else if(k==='Home')go(0); else if(k==='End')go(slides.length-1);
+  else if(k==='n'||k==='N')toggleNotes(); else if(k==='f'||k==='F')toggleFs();
+});
+let tx=null;stage.addEventListener('touchstart',e=>{if(e.target.closest('.viewer,input,button'))return;tx=e.touches[0].clientX},{passive:true});
+stage.addEventListener('touchend',e=>{if(tx==null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>60)go(cur+(d<0?1:-1));tx=null});
+addEventListener('hashchange',()=>{const m=location.hash.match(/slide-(\d+)/);if(m)go(+m[1]-1,false)});
+
+/* ---------------- 3D ---------------- */
+const INFO={
+ board_body:['FR-4','Board substrate','Glass fibre impregnated with resin, 1.6 mm thick. Electrically insulating.'],
+ board_mask:['Mask','Solder mask (green coating)','Protects the copper; openings only at the pads to be soldered.'],
+ board_copper:['Copper','Traces (copper)','Copper traces between parts. Two layers, connected through vias.'],
+ board_silk:['Silkscreen','Silkscreen (white lettering)','Part names and orientation marks. PHOTON GLASS, the URL and the licence are printed here too.'],
+ part_U_1:['U$1','40-pin socket','The Raspberry Pi Zero 2 W plugs in here. Power, audio, button and LED signals all pass through it.','Generic 8.5 mm-high socket (BOOMELE 2.54-2*20P).'],
+ part_PCM5102A:['PCM5102A','Audio DAC','Converts the digital audio from the Raspberry Pi into an analogue voltage waveform.','By TI. Receives I2S (BCK, LRCK, DIN) on header pins 12, 35 and 40.'],
+ part_PAM8304:['PAM8304','Speaker amplifier','Amplifies the DAC’s small signal enough to drive the speaker.','Class-D amplifier (Diodes Inc.). Its input is cut when earphones are plugged in.'],
+ part_CN1:['CN1','3.5 mm headphone jack','Earphone socket with a built-in switch that cuts the speaker signal when a plug is inserted.','A 4-pole part (CUI SJ-43516) wired to behave like a 3-pole jack.'],
+ part_CN2:['CN2','Camera FFC connector (22-pin)','Connects to the Raspberry Pi’s camera port with a flat cable (FFC).','Camera signals run from here through the board to the HDMI connector.'],
+ part_CN3:['CN3','HDMI connector','Connects to the camera board, not to a monitor.','The HDMI wires carry camera signals, the button, the LED and 3.3 V.'],
+ part_U_3:['U$3','RGB LED','Shows the state in red, green and blue.','Green = idle, yellow = communicating, blue = speaking, red = error. GPIO 9 (red), 11 (green), 10 (blue).'],
+ part_VR1:['VR1','Volume potentiometer (dual)','Turning it changes the resistance ratio and thus the volume. Two channels in one part.','Hand-soldered (aitendo R1001G16T2B-B10K).'],
+ part_SW_MAIN:['SW_MAIN','Main button (bottom side)','Sits directly under the large round button of the main unit.','GPIO27. Unused by the current program — room for extension. Hand-soldered.'],
+ part_SW_SUB:['SW_SUB','Sub button','Stops speech midway.','GPIO22. Side-actuated (SKHHLPA010). Hand-soldered.'],
+ part_SW_UP:['SW_UP','Up button','Unused by the current program.','GPIO23. Hand-soldered.'],
+ part_SW_DOWN:['SW_DOWN','Down button','Unused by the current program.','GPIO24. Hand-soldered.'],
+ part_5V:['5V','Power connector','Receives 5 V from the mobile battery.','Reversing + and − destroys the Raspberry Pi. Always check with a multimeter first.'],
+ part_SPK:['SPK','Speaker connector','2-pin connector for the speaker.','See hardware/main-board/images/speaker_connector_orientation.png for orientation.'],
+};
+const R_INFO={R1:'Audio path (470 Ω)',R2:'Audio path (470 Ω)',R3:'Audio to the speaker side (470 Ω)',R4:'Audio to the speaker side (470 Ω)',R5:'Amplifier input (470 kΩ)',R6:'Amplifier input (470 kΩ)',R7:'Sets the LED current (40.2 Ω)',R8:'Sets the LED current (40.2 Ω)',R9:'Sets the LED current (40.2 Ω)'};
+const C_INFO={C1:'Stabilises the supply (2.2 µF)',C5:'DAC output filter (2200 pF)',C6:'DAC output filter (2200 pF)'};
+const CAM_INFO={
+ part_CN1:['CN1','HDMI connector','The HDMI cable from the main board plugs in here.','Its wires carry the camera image, the button, the LED and 3.3 V.'],
+ part_CN2:['CN2','Camera FFC connector','The flat cable of the camera (Zero Spy Camera) plugs in here.','Pad numbering is reversed relative to the real part (as in the original design).'],
+ part_SW1:['SW1','Camera button (shutter)','Pressing the enclosure’s shutter presses this button.','HDMI pin 16 → main board → GPIO17. Pulled up by 10 kΩ (R1).'],
+ part_GND:['LED','Indicator LED (red)','A small LED on the camera board. Its odd designator “GND” is a leftover of the original design.','Current set by 1 kΩ (R3). Driven from GPIO8.'],
+ part_R1:['R1','10 kΩ pull-up resistor','Holds the signal at 3.3 V while the button is released.',''],
+ part_R2:['R2','10 kΩ pull-up resistor','Pull-up for the spare line (SW2).',''],
+ part_R3:['R3','1 kΩ LED resistor','Sets the LED current.',''],
+};
+const CU_INFO={
+ cu_body:['body','Body (tube with integrated shutter)','The outer shell. The shutter is a leaf spring moulded into the tube that presses the button inside.','Printed in PETG (tough), standing upright with the lens end down.'],
+ cu_nose:['nose','Camera cover','Holds the camera from the front, with a hole for the lens.',''],
+ cu_tail:['tail','Rear cap','Closes the back of the tube. Use tail_loose if it is too tight.',''],
+ cu_sled:['sled','Sled','Carrier for the camera board (screwed) and the camera (taped); slides into the tube.',''],
+ cu_clip:['temple_tie_clip','Glasses attachment','Fixed to the temple of the glasses with a cable tie.','Needs support only under the latch tongue.'],
+ cu_camera:['camera','Camera (Zero Spy Camera)','A small 8.6 × 8.6 mm camera, simplified in this model.','Connects to CN2 on the camera board with an FFC.'],
+};
+const MB_INFO={
+ body_front:['body_front','Body front','Outer face with the large main-button hole and a window in the left wall for the status-lamp lens.','Print outer face down.'],
+ body_back:['body_back','Body back','Fixed to the front with four screws (FBP-0208EB).','Print outer face down (flipped from the design data).'],
+ body_side:['body_side','Body side','Side panel with the volume (VR1) window and the up/down buttons.','“+” and “−” marks flank the window.'],
+ main_button:['main_button','Main button','Fits into the round hole from inside and presses SW_MAIN on the board’s underside.','Print closed end down.'],
+ sub_button:['sub_button','Sub button','Presses SW_SUB (stops speech).','Print standing, oval flange down; support only under the flange.'],
+ status_lens:['status_lens','Status lens','A small clear part that makes the LED colour visible from outside.','Clear PETG, 100 % infill, printed slow and hot for best light transmission.'],
+};
+function infoFor(model,name){
+  if(!name)return null;
+  if(model==='main_board'){
+    if(INFO[name])return INFO[name];
+    const ref=name.replace('part_','');
+    if(/^R\d/.test(ref))return [ref,'Resistor',R_INFO[ref]||'Resistor','Limits current. 0603 size (1.6 × 0.8 mm).'];
+    if(/^C\d/.test(ref))return [ref,'Capacitor',C_INFO[ref]||'0.1 µF decoupling capacitor: absorbs supply noise','Stores charge briefly; placed right next to the IC.'];
+  }
+  if(model==='camera_board'){ if(name.startsWith('board_'))return INFO[name]; return CAM_INFO[name]; }
+  if(model==='camera_unit'){ if(name.startsWith('cb_'))return ['camera board','Camera board','Screwed onto the sled, component side down.','The board from the previous slide.']; return CU_INFO[name]; }
+  if(model==='main_body')return MB_INFO[name];
+  return null;
+}
+const MODELS={
+  main_board:{url:'models/main_board.glbz.txt',zup:false},
+  camera_board:{url:'models/camera_board.glbz.txt',zup:false},
+  camera_unit:{url:'models/camera_unit.glbz.txt',zup:true},
+  main_body:{url:'models/main_body.glbz.txt',zup:true},
+};
+// explode offsets (model units: mm, z-up) and assembly timing [start,end]
+const EXPLODE={
+  camera_unit:n=>{
+    if(n.startsWith('cb_'))return {v:[-45,0,26],t:[.18,.42]};
+    return ({cu_camera:{v:[-70,0,0],t:[0,.22]},cu_sled:{v:[-45,0,0],t:[.42,.62]},cu_nose:{v:[-95,0,0],t:[.62,.78]},cu_tail:{v:[30,0,0],t:[.74,.88]},cu_clip:{v:[0,0,-22],t:[.86,1]}})[n]||{v:[0,0,0],t:[0,1]};
+  },
+  main_body:n=>({status_lens:{v:[30,0,8],t:[0,.18]},sub_button:{v:[40,0,0],t:[.12,.34]},main_button:{v:[0,0,38],t:[.3,.52]},body_side:{v:[0,-40,0],t:[.5,.72]},body_back:{v:[0,0,70],t:[.72,1]},body_front:{v:[0,0,0],t:[0,1]}})[n]||{v:[0,0,0],t:[0,1]},
+};
+const viewer=(()=>{
+  if(!window.THREE){return {attach(el){$$('.viewer .loading',el).forEach(l=>l.textContent='Could not load 3D (check your internet connection)')},resize(){},pick(){}}}
+  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.outputEncoding=THREE.sRGBEncoding; renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  const cam=new THREE.PerspectiveCamera(32,1,.01,1000);
+  const controls=new THREE.OrbitControls(cam,renderer.domElement); controls.enableDamping=true; controls.dampingFactor=.08;
+  const loader=new THREE.GLTFLoader(); const cache={};
+  let host=null, scene=null, root=null, mode=null, modelKey=null, picked=null, infoEl=null, anim=null, slider=null, labels=[], spin=false;
+  const raycaster=new THREE.Raycaster(), ptr=new THREE.Vector2();
+  function load(key){
+    if(cache[key])return cache[key];
+    // models are gzip + base64 text files (the host serves text, not .glb)
+    const fetchGlb=async url=>{const t=(await (await fetch(url)).text()).replace(/\s+/g,'');const bin=Uint8Array.from(atob(t),c=>c.charCodeAt(0));
+      const ds=new Response(new Blob([bin]).stream().pipeThrough(new DecompressionStream('gzip')));return await ds.arrayBuffer();};
+    return cache[key]=new Promise((res,rej)=>fetchGlb(MODELS[key].url).then(buf=>loader.parse(buf,'',g=>{
+      const r=g.scene; if(MODELS[key].zup)r.rotation.x=-Math.PI/2;
+      const outer=new THREE.Group(); outer.add(r); outer.updateMatrixWorld(true);
+      const box=new THREE.Box3().setFromObject(outer), size=box.getSize(new THREE.Vector3()), c=box.getCenter(new THREE.Vector3());
+      r.position.copy(c.negate()); outer.scale.setScalar(4/Math.max(size.x,size.y,size.z));
+      // the level that holds one node per part (skip wrapper nodes such as "world")
+      let inner=r; while(inner.children.length===1&&!inner.children[0].isMesh)inner=inner.children[0];
+      const parts={}; inner.traverse(o=>{if(o.isMesh){o.material=o.material.clone();if(o.material.color)o.material.color.convertSRGBToLinear();o.userData.baseEmissive=o.material.emissive?o.material.emissive.clone():new THREE.Color(0);
+        let p=o; while(p.parent&&p.parent!==inner)p=p.parent; const nm=p.name||o.name; (parts[nm]=parts[nm]||[]).push(o); o.userData.part=nm;}});
+      inner.children.forEach(ch=>{ch.userData.base=ch.position.clone()});
+      res({root:outer,inner,parts});
+    },rej)).catch(rej));
+  }
+  function mkScene(){const sc=new THREE.Scene();sc.add(new THREE.HemisphereLight(0xffffff,0x9aa59e,1.0));const d=new THREE.DirectionalLight(0xffffff,1.1);d.position.set(4,8,6);sc.add(d);const d2=new THREE.DirectionalLight(0xffffff,.45);d2.position.set(-6,3,-4);sc.add(d2);return sc;}
+  function frame(obj,d){const b=new THREE.Box3().setFromObject(obj),sz=b.getSize(new THREE.Vector3()),c=b.getCenter(new THREE.Vector3());const r=sz.length()/2;const dist=r/Math.sin(THREE.MathUtils.degToRad(cam.fov/2))*(d?1.0:0.72);
+    const dir=new THREE.Vector3(...(d||[.55,.75,.95])).normalize(); cam.position.copy(c.clone().add(dir.multiplyScalar(dist))); cam.near=dist/100; cam.far=dist*10; cam.updateProjectionMatrix(); controls.target.copy(c); controls.update();}
+  function setHighlight(name){
+    if(!root)return; picked=name;
+    Object.entries(root.userData.parts).forEach(([nm,ms])=>ms.forEach(m=>{if(!m.material.emissive)return;m.material.emissive.copy(nm===name?new THREE.Color(0x2F6BFF):m.userData.baseEmissive);m.material.emissiveIntensity=nm===name?1:1}));
+    if(infoEl){const inf=infoFor(modelKey,name); if(inf){infoEl.innerHTML=`<div class="ref">${inf[0]}</div><h3>${inf[1]}</h3><p>${inf[2]}</p>${inf[3]?`<p class="detail">${inf[3]}</p>`:''}`}}
+    $$('.chip',host.closest('.slide')).forEach(c=>c.classList.toggle('on',c.dataset.pick===name));
+  }
+  function applyExplode(t){ // t: 0 assembled .. 1 exploded
+    const f=EXPLODE[modelKey]; if(!f)return; const inner=root.userData.inner;
+    inner.children.forEach(ch=>{const e=f(ch.name);const T=1-t;const local=clamp((T-e.t[0])/(e.t[1]-e.t[0]),0,1);const k=1-ease(local);
+      ch.position.set(ch.userData.base.x+e.v[0]*k,ch.userData.base.y+e.v[1]*k,ch.userData.base.z+e.v[2]*k);});
+  }
+  const LAYERS=[['board_body','FR-4 (substrate)'],['board_copper','Copper'],['board_mask','Solder mask'],['board_silk','Silkscreen'],['parts','Components']];
+  function applyLayers(t){
+    const inner=root.userData.inner; const gap=0.012; // metres
+    inner.children.forEach(ch=>{let i=LAYERS.findIndex(l=>l[0]===ch.name); if(i<0)i=4; ch.position.set(ch.userData.base.x,ch.userData.base.y+gap*i*ease(t),ch.userData.base.z)});
+    labels.forEach(l=>l.el.style.opacity=t>.15?1:0);
+  }
+  function placeLabels(){
+    if(mode!=='layers'||!labels.length)return; const rect=renderer.domElement.getBoundingClientRect(); const hr=host.getBoundingClientRect(); const sc=hr.width/host.offsetWidth;
+    labels.forEach(l=>{const ch=l.objs[0]; if(!ch)return; const b=new THREE.Box3().setFromObject(ch); const p=new THREE.Vector3(b.max.x,(b.min.y+b.max.y)/2,(b.min.z+b.max.z)/2).project(cam);
+      l.el.style.left=((p.x+1)/2*rect.width/sc)+'px'; l.el.style.top=((1-p.y)/2*rect.height/sc)+'px';});
+  }
+  async function attach(slide){
+    const v=$('.viewer',slide); stopLoop(); labels.forEach(l=>l.el.remove()); labels=[];
+    if(!v){host=null;return}
+    host=v; mode=v.dataset.mode; modelKey=v.dataset.model; infoEl=v.dataset.info?$(v.dataset.info):null; slider=$('[data-slider]',v); spin=mode==='spin';
+    v.appendChild(renderer.domElement); resize();
+    let m; try{m=await load(modelKey)}catch(e){const l=$('.loading',v);if(l)l.textContent='Could not load 3D';return}
+    if(host!==v)return; const l=$('.loading',v); if(l)l.remove();
+    scene=mkScene(); root=m.root; root.userData.parts=m.parts; root.userData.inner=m.inner; scene.add(root);
+    m.inner.children.forEach(ch=>ch.position.copy(ch.userData.base)); setHighlight(null);
+    if(mode==='explode'){applyExplode(slider?slider.value/1000:1)}
+    if(mode==='layers'){ const groups={}; m.inner.children.forEach(ch=>{const k=LAYERS.some(x=>x[0]===ch.name)?ch.name:'parts';(groups[k]=groups[k]||[]).push(ch)});
+      LAYERS.forEach(([k,txt])=>{const el=document.createElement('div');el.className='layerlabel';el.textContent=txt;el.style.opacity=0;v.appendChild(el);labels.push({el,objs:groups[k]||[]})}); applyLayers(slider?slider.value/1000:0);}
+    if(mode==='layers'){applyLayers(1);frame(root,[.35,.42,1]);applyLayers(slider?slider.value/1000:0)}else if(mode==='explode'){applyExplode(1);frame(root,[.55,.75,.95]);applyExplode(slider?slider.value/1000:1)}else frame(root);
+    startLoop();
+  }
+  let raf=0,last=0;
+  function loop(ts){raf=requestAnimationFrame(loop); const dt=Math.min(.05,(ts-last)/1000||0); last=ts;
+    if(anim){anim.t+=dt/anim.dur; const k=clamp(anim.t,0,1); const val=anim.from+(anim.to-anim.from)*k; if(slider)slider.value=Math.round(val*1000); (mode==='layers'?applyLayers:applyExplode)(val); if(k>=1){anim=null; const b=$('[data-play]',host); if(b)b.textContent=mode==='layers'?(val>.5?'▶ Stack':'▶ Separate'):(val<.5?'▶ Explode':'▶ Assemble');}}
+    if(spin&&root&&!reduce)root.rotation.y+=dt*.25;
+    controls.update(); if(scene)renderer.render(scene,cam); placeLabels();}
+  function startLoop(){cancelAnimationFrame(raf);last=performance.now();raf=requestAnimationFrame(loop)}
+  function stopLoop(){cancelAnimationFrame(raf);anim=null}
+  function resize(){if(!host)return; const w=host.clientWidth,h=host.clientHeight; const r=host.getBoundingClientRect(); const sc=r.width/(w||1); renderer.setPixelRatio(Math.min(devicePixelRatio,2)*sc); renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix();}
+  // picking
+  let down=null;
+  renderer.domElement.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];spin=false});
+  renderer.domElement.addEventListener('pointerup',e=>{if(!down||!root||mode==='layers')return; if(Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return;
+    const r=renderer.domElement.getBoundingClientRect(); ptr.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); raycaster.setFromCamera(ptr,cam);
+    const hit=raycaster.intersectObject(root,true).find(h=>h.object.visible); if(hit&&infoEl)setHighlight(hit.object.userData.part);});
+  // controls inside viewer
+  document.addEventListener('input',e=>{if(e.target.matches('[data-slider]')&&host&&host.contains(e.target)&&root){anim=null;(mode==='layers'?applyLayers:applyExplode)(e.target.value/1000)}});
+  document.addEventListener('click',e=>{
+    const p=e.target.closest('.viewer [data-play]'); if(p&&host&&host.contains(p)&&root){const now=slider?slider.value/1000:0; let to=mode==='layers'?(now>.5?0:1):(now<.5?1:0); if(mode==='explode'&&now>=.999)to=0;
+      anim={t:0,from:now,to,dur:reduce?.01:(mode==='layers'?2.2:5.5)}; p.textContent='■ Playing';}
+    const c=e.target.closest('[data-pick]'); if(c&&host&&root)setHighlight(c.dataset.pick);
+  });
+  return {attach,resize,pick:setHighlight};
+})();
+
+/* ---------------- slide animations ---------------- */
+const anims={};
+function startAnims(el){const k=el.dataset.anim; if(k&&anims[k]&&anims[k].enter)anims[k].enter(el)}
+function stopAnims(el){const k=el.dataset.anim; if(k&&anims[k]&&anims[k].leave)anims[k].leave(el)}
+
+// pipeline
+anims.pipeline=(()=>{let timer=[],el=null;
+  const STEPS=[
+    {n:0,cap:'① Press the camera button',led:['#2E9A55','Green: idle (ready)'],snd:'trigger.wav (shutter)'},
+    {n:1,cap:'② The camera takes a photo; the image reaches the Raspberry Pi',led:['#2E9A55','Green: idle'],snd:'—'},
+    {n:2,cap:'③ The image is sent to the cloud for text recognition',led:['#D9A52B','Yellow: communicating (red + green)'],snd:'connect.wav (communicating)'},
+    {n:3,cap:'④ Speech audio is synthesised from the recognised text',led:['#D9A52B','Yellow: communicating'],snd:'connect.wav'},
+    {n:4,cap:'⑤ The speaker reads it aloud',led:['#2F6DB5','Blue: speaking'],snd:'start.wav → speech → finish.wav'},
+    {n:-1,cap:'⑥ Back to idle, waiting for the next press',led:['#2E9A55','Green: idle (ready)'],snd:'—'}];
+  const X=[120,400,710,1040,1315];
+  function show(i){const s=STEPS[i];$('[data-cap]',el).textContent=s.cap;$('[data-led]',el).setAttribute('fill',s.led[0]);$('[data-ledtxt]',el).textContent=s.led[1];$('[data-snd]',el).textContent=s.snd;
+    $$('[data-node] rect',el).forEach((r,j)=>{r.setAttribute('stroke',j===s.n?'#171A3B':'#E5E5E5');r.setAttribute('stroke-width',j===s.n?6:3)});
+    const d=$('[data-dot]',el); if(s.n>=0){d.setAttribute('cx',X[s.n]);d.setAttribute('opacity',1)}else d.setAttribute('opacity',0);}
+  function play(){timer.forEach(clearTimeout);timer=[];STEPS.forEach((s,i)=>timer.push(setTimeout(()=>show(i),reduce?0:i*1700)))}
+  return {enter(e){el=e;const b=$('[data-play]',el);b.onclick=play},leave(){timer.forEach(clearTimeout)}};})();
+
+// audio path canvas
+anims.audio=(()=>{let el,cv,ctx,raf=0,t0=0,playing=false,jack=false,tp=0;
+  const stagesSp=[['Raspberry Pi','I2S out','#111111'],['DAC','PCM5102A','#171A3B'],['Volume','VR1','#4A4A4A'],['Jack','CN1','#4A4A4A'],['Amp','PAM8304','#171A3B'],['Speaker','SPK','#171A3B']];
+  const stagesJk=[['Raspberry Pi','I2S out','#111111'],['DAC','PCM5102A','#171A3B'],['Volume','VR1','#4A4A4A'],['Jack','CN1','#4A4A4A'],['Earphones','','#2F6DB5']];
+  function size(){const r=cv.getBoundingClientRect();const w=cv.clientWidth,h=cv.clientHeight;const dpr=Math.min(devicePixelRatio,2)*(r.width/(w||1));cv.width=w*dpr;cv.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+  function draw(ts){raf=requestAnimationFrame(draw);if(playing)tp+=(ts-t0)/1000;t0=ts;const W=cv.clientWidth,H=cv.clientHeight;ctx.clearRect(0,0,W,H);
+    const st=jack?stagesJk:stagesSp;const n=st.length;const bw=Math.min(190,W/n-30),gap=(W-bw*n)/(n-1),by=8,bh=130;const band=H-(by+bh)-44;
+    const prog=playing?((tp*0.35)%1.4):1.4; // signal front position over stages
+    for(let i=0;i<n;i++){const x=i*(bw+gap);const lit=prog*(n)>i;ctx.fillStyle=lit?st[i][2]:'#fff';ctx.strokeStyle=st[i][2];ctx.lineWidth=3;roundRect(x,by,bw,bh,14);ctx.fill();ctx.stroke();
+      ctx.fillStyle=lit?'#fff':'#111111';ctx.font='700 26px "Noto Sans JP",sans-serif';ctx.textAlign='center';ctx.fillText(st[i][0],x+bw/2,by+66);ctx.font='20px "JetBrains Mono",monospace';ctx.fillText(st[i][1],x+bw/2,by+104);
+      if(i<n-1){ctx.strokeStyle='#4A4A4A';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x+bw+6,by+bh/2);ctx.lineTo(x+bw+gap-10,by+bh/2);ctx.stroke();ctx.beginPath();ctx.moveTo(x+bw+gap-10,by+bh/2-8);ctx.lineTo(x+bw+gap-2,by+bh/2);ctx.lineTo(x+bw+gap-10,by+bh/2+8);ctx.fillStyle='#4A4A4A';ctx.fill();}}
+    // waveforms under each segment
+    const wy=by+bh+band*0.45;
+    for(let i=0;i<n-1;i++){const x0=i*(bw+gap)+bw/2,x1=(i+1)*(bw+gap)+bw/2;const lit=prog*n>i+0.5;ctx.save();ctx.globalAlpha=lit?1:.2;ctx.strokeStyle=i===0?'#111111':(i>=3&&!jack?'#171A3B':'#2F6DB5');ctx.lineWidth=3;ctx.beginPath();
+      for(let x=x0;x<=x1;x+=2){const ph=(x/26)-tp*6;let y;if(i===0){y=(Math.sin(ph)>0?-1:1)*18+((Math.floor(x/13)%3===0)?8:0);}else{const a=Math.min(band*0.32,(i===1?36:i===2||i===3?(jack?30:22):70));y=Math.sin(ph)*a}
+        x===x0?ctx.moveTo(x,wy+y):ctx.lineTo(x,wy+y)}ctx.stroke();ctx.restore();
+      ctx.fillStyle='#4A4A4A';ctx.font='19px "Noto Sans JP",sans-serif';ctx.textAlign='center';ctx.fillText(i===0?'Digital (I2S)':i===1?'Analogue':i===2?'Volume (divider)':i===3?(jack?'To earphones':'Switch → amp'):'Class-D gain',(x0+x1)/2,by+bh+band-4);}
+    ctx.textAlign='left';ctx.fillStyle='#4A4A4A';ctx.font='20px "Noto Sans JP",sans-serif';ctx.fillText(jack?'Plugging in earphones opens the switch in the jack and cuts the path to the amp.':'With no earphones, the switch in the jack is closed and the signal goes to the amp.',0,H-8);}
+  function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+  return {enter(e){el=e;cv=$('[data-audio]',el);ctx=cv.getContext('2d');size();t0=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(draw);
+      $('[data-play]',el).onclick=ev=>{playing=!playing;ev.currentTarget.textContent=playing?'■ Stop':'▶ Play'};
+      $('[data-toggle-jack]',el).onclick=ev=>{jack=!jack;ev.currentTarget.textContent=jack?'Unplug earphones':'Plug in earphones';$('[data-jackstate]',el).textContent=jack?'Now: earphones in → speaker silent':'Now: no earphones → speaker plays'};
+      addEventListener('resize',size)},
+    leave(){cancelAnimationFrame(raf);removeEventListener('resize',size)}};})();
+
+// pins
+anims.pins=(()=>{const P={1:['pwr','3.3 V','Power (3.3 V)','To the camera board and the DAC’s digital side'],4:['pwr','5 V','Power (5 V)','Supplies the Raspberry Pi from the 5V connector'],6:['gnd','GND','GND (0 V)','Negative of the 5V connector'],9:['gnd','GND','GND (0 V)','Digital GND'],11:['btn','GPIO17','Camera button','To SW1 on the camera board via the HDMI cable'],12:['audio','GPIO18','Audio BCK','I2S: bit clock'],13:['btn','GPIO27','Main button','Unused by the current program'],15:['btn','GPIO22','Sub button','Stops speech'],16:['btn','GPIO23','Up button','Unused'],17:['pwr','3.3 V','Power (3.3 V, analogue)','To the DAC’s analogue side'],18:['btn','GPIO24','Down button','Unused'],19:['led','GPIO10','LED blue','via 40.2 Ω (R7)'],21:['led','GPIO9','LED red','via 40.2 Ω (R8)'],23:['led','GPIO11','LED green','via 40.2 Ω (R9)'],24:['led','GPIO8','Camera board LED','via the HDMI cable'],25:['gnd','GND','GND (analogue)','Audio GND'],35:['audio','GPIO19','Audio LRCK','I2S: left/right clock'],39:['gnd','GND','GND (0 V)','Digital GND'],40:['audio','GPIO21','Audio DIN','I2S: audio data']};
+  let built=false;
+  return {enter(el){const h=$('[data-header]',el);if(!built){built=true;
+    for(let c=0;c<20;c++){for(const r of [2,1]){const n=c*2+r;const b=document.createElement('button');const d=P[n];b.className='pin '+(d?d[0]:'');b.textContent=n;b.setAttribute('aria-label',`${n} pin${d?': '+d[2]:': unused'}`);
+      b.onclick=()=>{$$('.pin',h).forEach(x=>x.classList.remove('on'));b.classList.add('on');const i=$('[data-pininfo]',el);i.innerHTML=d?`<div class="ref">Physical pin ${n} · ${d[1]}</div><h3>${d[2]}</h3><p>${d[3]}</p>`:`<div class="ref">Physical pin ${n}</div><h3>Unused</h3><p>Not connected in PHOTON GLASS. Available for extensions.</p>`};h.appendChild(b)}}}}};})();
+
+// buttons & LED (static handlers)
+(()=>{const s=$('[data-press]')?.closest('.slide');if(!s)return;let pressed=false;const b=$('[data-press]',s);
+  b.onclick=()=>{pressed=!pressed;b.setAttribute('aria-pressed',String(pressed));b.textContent=pressed?'Release':'Press';$('[data-sw]',s).setAttribute('d',pressed?'M330 150L385 150':'M330 150L380 130');$('[data-gpio]',s).textContent=pressed?'GPIO = 0':'GPIO = 1';$('[data-pressmsg]',s).textContent=pressed?'Pressed: 0 V (0) → read as “pressed”':'Released: 3.3 V (1)'};
+  const st={r:false,g:false,b:false};const NAMES={'':'Off','r':'Red: error','g':'Green: idle','b':'Blue: speaking','rg':'Yellow: communicating','rb':'Purple (unused)','gb':'Cyan (unused)','rgb':'White (unused)'};
+  $$('[data-led]',s).forEach(x=>x.onclick=()=>{st[x.dataset.led]=!st[x.dataset.led];x.classList.toggle('on',st[x.dataset.led]);x.setAttribute('aria-pressed',String(st[x.dataset.led]));
+    const c=[st.r?235:30,st.g?205:34,st.b?235:32];if(st.r&&st.g&&!st.b){c[0]=240;c[1]=196;c[2]=40} if(!st.r&&st.g&&!st.b){c[0]=46;c[1]=180;c[2]=85} if(st.b&&!st.r&&!st.g){c[0]=47;c[1]=109;c[2]=220} if(st.r&&!st.g&&!st.b){c[0]=225;c[1]=60;c[2]=50}
+    const on=st.r||st.g||st.b;const bulb=$('[data-bulb]',s);bulb.style.background=on?`rgb(${c})`:'#2a2f2c';bulb.style.boxShadow=on?`0 0 60px 18px rgba(${c},.55), inset 0 -10px 30px rgba(0,0,0,.2)`:'inset 0 -10px 30px rgba(0,0,0,.4)';
+    $('[data-ledmsg]',s).textContent=NAMES[(st.r?'r':'')+(st.g?'g':'')+(st.b?'b':'')]});})();
+
+// schematic
+(()=>{const s=$('[data-sch]')?.closest('.slide');if(!s)return;const w=$('.schwrap',s),svg=$('[data-sch]',s);
+  const FULL=[0,0,341.173,264.947];let vb=FULL.slice(),zr=0;
+  const zoom=to=>{cancelAnimationFrame(zr);const from=vb.slice(),t0=performance.now(),D=reduce?0:450;
+    const step=now=>{const k=D?ease(clamp((now-t0)/D,0,1)):1;vb=from.map((v,i)=>v+(to[i]-v)*k);svg.setAttribute('viewBox',vb.join(' '));if(k<1)zr=requestAnimationFrame(step)};zr=requestAnimationFrame(step)};
+  $$('[data-b]',s).forEach(b=>b.onclick=()=>{const on=!b.classList.contains('on');$$('[data-b]',s).forEach(x=>x.classList.remove('on'));$$('[data-blk]',s).forEach(g=>g.classList.remove('on'));
+    w.classList.toggle('sel',on);if(on){b.classList.add('on');const g=$(`[data-blk="${b.dataset.b}"]`,s);g.classList.add('on');const r=$('rect',g);
+      const x=+r.getAttribute('x'),y=+r.getAttribute('y'),wd=+r.getAttribute('width'),ht=+r.getAttribute('height'),p=6;zoom([x-p,y-p,wd+2*p,ht+2*p])}else zoom(FULL)});
+  $$('[data-blk]',s).forEach(g=>{g.style.cursor='pointer';g.onclick=()=>$(`[data-b="${g.dataset.blk}"]`,s).click()});})();
+
+// repo tree
+(()=>{const T={
+  readme:['README.md','Start here','Folder list, links for newcomers, how to ask questions, licence table.','The entry point to everything.'],
+  docs:['docs/','Guides','BUILD_GUIDE.md (build order), SETUP_RASPBERRY_PI.md (Pi setup), parts_list.md (all parts checked against datasheets).','The folder you will read most while building.'],
+  hardware:['hardware/','Board design data','KiCad and Eagle files, Gerbers, BOM and CPL. Ordering steps in JLCPCB_ORDERING.md.','When ordering or modifying boards.'],
+  mainb:['hardware/main-board/','Main board OG19AWv2','kicad/, eagle/, gerber/, jlcpcb-assembly/, images/','79 × 42 mm, 2 layers.'],
+  camb:['hardware/camera-board/','Camera board OG19 PC','kicad/, eagle/, gerber/, jlcpcb-assembly/','39.3 × 17.2 mm, 2 layers.'],
+  enclosure:['enclosure/','Enclosures (3D printed)','STEP for CAD (plus the Fusion source .f3d for the main body), STL and 3MF for printing, print settings and assembly.','When printing or changing shapes.'],
+  mbody:['enclosure/main-body/','Main-unit enclosure','Body front, back and side, main button, sub button, status lens. Fusion source (.f3d), STEP, STL and 3MF, Bambu Lab A1 settings, assembly.','Black PETG (clear PETG for the lens).'],
+  cunit:['enclosure/camera-unit/','Camera-unit enclosure','Regenerated from parameters by src/camera_case.py (CadQuery).','PETG. Only the attachment needs support.'],
+  usb:['enclosure/usb-power-cable/','Power cable','How to make the cable from the mobile battery to the 5V connector, and the USB plug cover.','Always check +/− before connecting.'],
+  software:['software/','Program','main_async.py (runs normally), main_seq.py (for learning), sound effects, tests, setup/ (setup automation).','Runs on the Raspberry Pi.'],
+  charter:['CHARTER.md · LICENSE','Charter and licences','Principles, use, naming and patents (CHARTER.md), and the full licence texts.','When checking what you may do.'],
+ };const s=$('[data-tree]')?.closest('.slide');if(!s)return;$$('[data-k]',s).forEach(b=>b.onclick=()=>{$$('[data-k]',s).forEach(x=>x.classList.remove('on'));b.classList.add('on');const d=T[b.dataset.k];$('[data-treeinfo]',s).innerHTML=`<div class="ref">${d[0]}</div><h3>${d[1]}</h3><p>${d[2]}</p><p class="detail">${d[3]}</p>`});})();
+
+/* ---------------- boot ---------------- */
+addEventListener('resize',fit);
+document.addEventListener('fullscreenchange',()=>setTimeout(fit,50));
+const m=location.hash.match(/slide-(\d+)/); fit(); go(m?+m[1]-1:0,false);
+})();
+</script>
+
+</body></html>

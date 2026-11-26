@@ -1,0 +1,810 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>PHOTON GLASS 授業資料</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+JP:wght@400;700;900&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: plain white sheet, black type, big margins. Titles top-left in heavy gothic; grey rounded boxes for asides;
+   navy only for table headers and the selected state. Single light look on purpose (projected); colours set explicitly. */
+:root{
+  --paper:#F3F3F3; --sheet:#FAFAFA; --ink:#111111; --ink2:#4A4A4A; --line:#D0D0D0; --box:#E5E5E5;
+  --navy:#171A3B; --hi:#2F6BFF;
+  --mask:#171A3B; --copper:#171A3B; --copper-l:#FFFFFF;
+  --led-r:#D2453B; --led-g:#2E9A55; --led-b:#2F6DB5; --led-y:#D9A52B;
+  --f-head:"Inter","Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-body:"Inter","Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);overflow:hidden;
+  padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+.viewport{position:fixed;inset:0;overflow:hidden;background:var(--paper)}
+.stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:center center}
+.slide{position:absolute;inset:0;background:var(--sheet);box-sizing:border-box;padding:96px 108px 92px;display:none;flex-direction:column;gap:34px}
+.slide.active{display:flex;animation:enter .35s ease both}
+@keyframes enter{from{opacity:0}to{opacity:1}}
+.slide.dark{justify-content:center}
+.slide.title{align-items:center;justify-content:center;text-align:center}
+.eyebrow{display:none}
+h1,h2,h3{font-family:var(--f-head);margin:0;text-wrap:balance;color:var(--ink)}
+h1,h2,h3,p,li,td,th,figcaption,.tag,summary{word-break:auto-phrase}
+.info h3{text-wrap:pretty}
+.schwrap{background:#fff;border-radius:16px;border:2px solid var(--line);padding:8px;min-height:0;display:flex}
+.schwrap{overflow:hidden}.schwrap svg{width:100%;height:100%;overflow:hidden}
+.schwrap g rect{fill:rgba(47,107,255,.06);stroke:var(--hi);stroke-width:.9;rx:2;transition:opacity .2s,fill .2s}
+.schwrap g text{font:700 7px var(--f-head);fill:var(--hi)}
+.schwrap.sel g{opacity:.25}.schwrap.sel g.on{opacity:1}.schwrap g.on rect{fill:rgba(47,107,255,.16);stroke-width:1.4}
+.schlist{display:flex;flex-direction:column;gap:8px}
+.schlist button{all:unset;cursor:pointer;display:flex;gap:14px;align-items:flex-start;background:var(--box);border-radius:16px;padding:12px 18px}
+.schlist button b{font-family:var(--f-head);font-weight:900;font-size:24px;min-width:22px}
+.schlist button span{font-size:21px;font-weight:700;line-height:1.4;display:flex;flex-direction:column;gap:2px}
+.schlist button small{font-size:17px;font-weight:400;color:var(--ink2)}
+.schlist button.on{background:var(--navy);color:#fff}.schlist button.on small{color:#C9CCE0}
+.schlist button:focus-visible{outline:4px solid var(--hi);outline-offset:3px}
+.secno{font-family:var(--f-head);font-weight:900;font-size:140px;line-height:1;color:var(--ink)}
+table.t td.nw,table.t th.nw{white-space:nowrap}
+table.t.steps td{vertical-align:middle;padding:9px 16px}
+table.t.steps th{white-space:nowrap;padding:9px 16px}
+table.t.steps td.f{font-family:var(--f-mono);font-size:19px;color:var(--ink2);white-space:nowrap}
+table.t.steps td.no{font-family:var(--f-head);font-weight:900;white-space:nowrap;width:1%}
+table.t.steps td.w{font-weight:700;white-space:nowrap;width:1%}
+h1{font-size:72px;font-weight:700;line-height:1.3;letter-spacing:.01em}
+h2{font-size:48px;font-weight:900;line-height:1.25}
+h3{font-size:28px;font-weight:900;line-height:1.35}
+p,li{font-size:28px;line-height:1.6;margin:0}
+.lead{font-size:30px;line-height:1.7;color:var(--ink);max-width:1300px}
+.small{font-size:24px;line-height:1.6;color:var(--ink2)}
+.mono{font-family:var(--f-mono)}
+.row{display:flex;gap:34px;min-height:0}
+.col{display:flex;flex-direction:column;gap:18px;min-width:0}
+.grow{flex:1;min-height:0}
+.row > .card{align-self:stretch}
+.card{background:var(--box);border-radius:16px;padding:24px 28px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.tag{display:inline-block;font-family:var(--f-head);font-size:20px;font-weight:900;color:var(--ink);letter-spacing:.02em;background:none!important;padding:0}
+.tag.cu{color:var(--ink)}
+.pagehead{display:flex;flex-direction:column;gap:8px}
+.arrow{font-size:28px;line-height:1.6}
+button{font:inherit}
+.btn{white-space:nowrap;font-family:var(--f-head);font-weight:700;font-size:22px;border:2px solid var(--ink);background:var(--ink);color:#fff;border-radius:999px;padding:9px 24px;cursor:pointer;display:inline-flex;align-items:center;gap:10px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:focus-visible,.navbtn:focus-visible,.tree button:focus-visible,.pin:focus-visible,.ledsw:focus-visible,.chip:focus-visible{outline:4px solid var(--hi);outline-offset:3px}
+details.more{padding-top:4px}
+details.more summary{cursor:pointer;font-weight:700;font-size:22px;color:var(--ink2)}
+details.more p,details.more li{font-size:22px;line-height:1.6;color:var(--ink2)}
+/* 3D viewer */
+.viewer{position:relative;background:#E8EBEF;overflow:hidden;min-height:0;border-radius:16px}
+.viewer canvas{display:block;width:100%!important;height:100%!important;touch-action:none;cursor:grab}
+.viewer .hint{position:absolute;left:16px;top:12px;font-size:18px;color:var(--ink2);pointer-events:none}
+.viewer .loading{position:absolute;inset:0;display:grid;place-items:center;font-size:24px;color:var(--ink2)}
+.viewer .ctrl{position:absolute;left:16px;right:16px;bottom:14px;display:flex;gap:14px;align-items:center}
+.viewer .ctrl input[type=range]{flex:1;accent-color:var(--ink);height:28px}
+.viewer .ctrl .lbl{font-size:20px;color:var(--ink2);white-space:nowrap}
+.layerlabel{position:absolute;font-weight:700;font-size:20px;padding:3px 10px;border-radius:6px;background:rgba(17,17,17,.88);color:#fff;transform:translate(14px,-50%);white-space:nowrap;pointer-events:none;transition:opacity .3s}
+.info{background:var(--box);border-radius:16px;padding:22px 26px;display:flex;flex-direction:column;gap:10px;min-height:0;overflow:auto}
+.info .ref{font-family:var(--f-mono);font-size:19px;color:var(--ink2);font-weight:700}
+.info h3{font-size:30px}
+.info p{font-size:24px;line-height:1.6}
+.info .detail{font-size:20px;color:var(--ink2)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{font-size:19px;border:2px solid var(--line);background:#fff;border-radius:999px;padding:4px 14px;cursor:pointer;font-family:var(--f-body);color:var(--ink)}
+.chip.on{border-color:var(--navy);background:var(--navy);color:#fff}
+/* nav */
+.navbar{position:fixed;left:0;right:0;bottom:0;display:flex;align-items:center;gap:10px;padding:8px max(14px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));
+  background:linear-gradient(transparent,rgba(243,243,243,.95) 40%);opacity:.25;transition:opacity .25s;z-index:5}
+.navbar:hover,.navbar:focus-within{opacity:1}
+.navbtn{border:2px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;min-width:44px;height:40px;font-size:18px;cursor:pointer;padding:0 12px}
+.count{font-family:var(--f-mono);font-size:15px;color:var(--ink2);min-width:64px;text-align:center}
+.progress{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--copper);width:0;transition:width .3s}
+.notes{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:64px;width:min(460px,calc(100vw - 28px));max-height:45vh;overflow:auto;background:#111111;color:#E8EFE9;border-radius:12px;padding:16px 18px;font-size:15px;line-height:1.7;z-index:6;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.notes b{color:#fff}
+/* pipeline animation */
+.pipe{position:relative;flex:1;min-height:0}
+.pipe svg{width:100%;height:100%}
+.step-cap{font-size:30px;font-family:var(--f-head);font-weight:700;min-height:48px}
+/* tree */
+.tree{display:flex;flex-direction:column;gap:6px;font-family:var(--f-mono);font-size:22px}
+.tree button{all:unset;cursor:pointer;padding:6px 12px;border-radius:8px;display:flex;gap:10px;align-items:center}
+.tree button.on{background:var(--navy);color:#fff}
+.tree button .k{color:var(--ink2);font-weight:700}
+.tree button.on .k{color:#fff}
+.tree .sub{padding-left:34px}
+/* pins */
+.header40{border-radius:16px!important;display:grid;grid-template-columns:repeat(20,1fr);grid-auto-flow:column;grid-template-rows:repeat(2,1fr);gap:8px;background:#1b1f1d;padding:16px;border-radius:12px}
+.pin{all:unset;box-sizing:border-box;aspect-ratio:1;border-radius:50%;border:3px solid #6b726e;background:#2c312e;cursor:pointer;display:grid;place-items:center;font-family:var(--f-mono);font-size:14px;color:#c9d0cb}
+.pin.audio{background:var(--led-b);border-color:#8fb3e0;color:#fff}
+.pin.btn{background:#E0A030;border-color:#F2CF8A;color:#111}
+.pin.led{background:var(--led-g);border-color:#9fd6b2;color:#fff}
+.pin.pwr{background:var(--led-r);border-color:#eba39d;color:#fff}
+.pin.gnd{background:#555b57;border-color:#8a918c;color:#fff}
+.pin.on{outline:4px solid #fff;outline-offset:2px}
+.legend{display:flex;gap:22px;flex-wrap:wrap;font-size:22px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:20px;height:20px;border-radius:50%;display:inline-block}
+/* LED mixer */
+.ledsw{all:unset;cursor:pointer;width:120px;height:64px;border-radius:14px;border:3px solid var(--line);display:grid;place-items:center;font-family:var(--f-head);font-weight:900;font-size:26px;background:#fff;color:#111}
+.ledsw.on.r{background:var(--led-r);color:#fff;border-color:var(--led-r)}
+.ledsw.on.g{background:var(--led-g);color:#fff;border-color:var(--led-g)}
+.ledsw.on.b{background:var(--led-b);color:#fff;border-color:var(--led-b)}
+.ledbulb{width:170px;height:170px;border-radius:50%;background:#2a2f2c;box-shadow:inset 0 -10px 30px rgba(0,0,0,.4);transition:background .25s,box-shadow .25s}
+table.t{border-collapse:separate;border-spacing:0;width:100%;font-size:24px;background:#fff;border:2px solid var(--line);border-radius:12px;overflow:hidden}
+table.t tr:last-child td{border-bottom:0}
+table.t th:last-child,table.t td:last-child{border-right:0}
+table.t th,table.t td{text-align:left;padding:10px 16px;border:0;border-bottom:1px solid var(--line);border-right:1px solid var(--line);vertical-align:top}
+table.t th{font-family:var(--f-head);font-size:20px;font-weight:700;color:#fff;background:var(--navy);border-color:#2b2f55}
+.flow{display:flex;gap:40px;align-items:stretch}
+.flow .st{flex:1;min-width:0;background:var(--box);border-radius:16px;padding:20px 18px;display:flex;flex-direction:column;gap:8px;position:relative}
+.flow .st+.st::before{content:'▶';position:absolute;left:-31px;top:50%;transform:translateY(-50%);font-size:20px;color:var(--ink)}
+.flow .st .n{font-family:var(--f-head);font-weight:900;color:var(--ink);font-size:22px}
+.flow .st h3{font-size:26px}
+.flow .st p{font-size:20px;line-height:1.5;color:var(--ink2)}
+.flow .st .file{font-family:var(--f-mono);font-size:16px;color:var(--ink2);word-break:break-all}
+.lic{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.big{font-family:var(--f-head);font-weight:900;font-size:120px;line-height:1;color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.slide.active{animation:none}*{transition:none!important}}
+</style>
+
+<div class="viewport" id="viewport"><div class="stage" id="stage">
+
+<!-- 1 cover -->
+<section class="slide title" data-notes="本講義では、PHOTON GLASS のドキュメント（GitHub）と電気回路を扱います。<br>3D モデルはドラッグで回転でき、部品をクリックすると説明が出ます。<br>← → キーでページ送り、N キーでこのメモの表示・非表示、F キーで全画面。">
+  <div class="col" style="align-items:center;gap:26px">
+    <h1>PHOTON GLASS の<br>ドキュメントと電気回路について</h1>
+    <p style="font-size:30px">PHOTON GLASS: documentation and electronics</p>
+  </div>
+</section>
+
+<!-- 2 agenda -->
+<section class="slide" data-notes="40分のうち、説明は約30分、残りを質疑に充てます。<br>各ページの「補足」は発展的な内容なので、時間に応じて省略してください。">
+  <div class="pagehead"><div class="eyebrow">目次 · 40分</div><h2>目次</h2></div>
+  <div class="row grow" style="align-items:stretch">
+    <div class="card" style="flex:1"><div class="big">1</div><h3>全体像</h3><p class="small">構成、音声が出るまでの処理、部品間の接続、Raspberry Pi の役割。</p><p class="mono small" style="margin-top:auto">約 7 分</p></div>
+    <div class="card" style="flex:1"><div class="big">2</div><h3>GitHub の構成</h3><p class="small">リポジトリの構成、製作の手順、OSS のライセンス、GitHub と Scrapbox の使い分け。</p><p class="mono small" style="margin-top:auto">約 8 分</p></div>
+    <div class="card" style="flex:1"><div class="big">3</div><h3>基板と電気回路</h3><p class="small">基板の構造、メイン基板と回路図、40ピンヘッダ、音声経路、カメラユニット、製造、拡張。</p><p class="mono small" style="margin-top:auto">約 15 分 ＋ 質疑 10 分</p></div>
+  </div>
+  <p class="small">各ページの <b>「補足」</b> は発展的な内容。読まなくても先に進める。</p>
+</section>
+
+<!-- 3 what -->
+<section class="slide" data-notes="写真は完成した PHOTON GLASS。左が本体、右がメガネに取り付けたカメラユニット。<br>PHOTON GLASS は OTON GLASS ver5 をもとに、自作と改変をしやすくしたツールキットです。<br>サンプルのプログラムは文字の読み上げですが、カメラ・ボタン・音声出力の組み合わせは別の用途にも転用できます。">
+  <div class="pagehead"><div class="eyebrow">1 · 全体像</div><h2>PHOTON GLASS の構成</h2></div>
+  <div class="row grow" style="align-items:stretch;gap:40px">
+    <figure style="flex:1.05;margin:0;min-height:0;position:relative;display:flex">
+      <img src="images/photon_glass.jpg" alt="PHOTON GLASS：カメラユニットを付けたメガネと本体" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:16px;background:#fff">
+      <figcaption class="small" style="position:absolute;left:16px;bottom:14px;font-size:18px;line-height:1.4;color:var(--ink2);background:rgba(255,255,255,.85);padding:4px 12px;border-radius:999px">左：本体　右：メガネに取り付けたカメラユニット</figcaption>
+    </figure>
+    <div class="col" style="flex:1;gap:12px">
+      <p style="font-size:21px;line-height:1.55">一人称視点のカメラで捉えた情報を、音声などで返すメガネ型デバイス。サンプルのプログラムは、撮影した文字を読み上げる。</p>
+      <div class="card" style="padding:12px 22px;gap:2px;flex:1;justify-content:center"><span class="tag">メガネに装着</span><h3>カメラユニット</h3><p class="small" style="font-size:21px;line-height:1.5">カメラ、シャッター（カメラボタン）、カメラ基板。HDMI ケーブル1本で本体と接続する。</p></div>
+      <div class="card" style="padding:12px 22px;gap:2px;flex:1;justify-content:center"><span class="tag">ポケットや首に</span><h3>本体</h3><p class="small" style="font-size:21px;line-height:1.5">Raspberry Pi Zero 2 W とメイン基板。スピーカー、ボタン4個、状態表示の LED、音量つまみ。</p></div>
+      <div class="card" style="padding:12px 22px;gap:2px;flex:1;justify-content:center"><span class="tag cu">Python</span><h3>プログラム</h3><p class="small" style="font-size:21px;line-height:1.5">ボタン入力を待ち、撮影し、クラウドの API で文字認識と音声合成を行い、再生する。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 pipeline animation -->
+<section class="slide" data-anim="pipeline" data-notes="再生すると、カメラボタンを押してから音声が出るまでの処理を順に示します。<br>LED の色が状態に応じて変わる点に注目（緑＝待機、黄＝通信中、青＝読み上げ中）。<br>文字認識と音声合成は Raspberry Pi 上ではなく Google Cloud（Vision API・Text-to-Speech API）で行うため、ネットワーク接続が必要です。">
+  <div class="pagehead"><div class="eyebrow">1 · 全体像 · 動画</div><h2>音声が出るまでの流れ</h2></div>
+  <div class="row" style="align-items:center;gap:20px">
+    <button class="btn" data-play>▶ 再生</button>
+    <div class="step-cap" data-cap>再生すると、処理を順に示す</div>
+  </div>
+  <div class="pipe"><svg viewBox="0 0 1424 560" aria-label="カメラボタンから読み上げまでの流れ" role="img">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="#4A4A4A"/></marker></defs>
+    <g font-family="Noto Sans JP, sans-serif" font-weight="700" font-size="26" fill="#111111">
+      <g data-node="0"><rect x="20" y="60" width="200" height="150" rx="16" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="120" y="122" text-anchor="middle">カメラボタン</text><text x="120" y="162" text-anchor="middle" font-size="20" fill="#4A4A4A">押す</text></g>
+      <g data-node="1"><rect x="300" y="60" width="200" height="150" rx="16" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="400" y="122" text-anchor="middle">撮影</text><text x="400" y="162" text-anchor="middle" font-size="20" fill="#4A4A4A">カメラ → Pi</text></g>
+      <g data-node="2"><rect x="580" y="60" width="260" height="150" rx="16" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="710" y="122" text-anchor="middle">文字を読み取る</text><text x="710" y="162" text-anchor="middle" font-size="20" fill="#4A4A4A">Google Vision API</text></g>
+      <g data-node="3"><rect x="920" y="60" width="240" height="150" rx="16" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="1040" y="122" text-anchor="middle">声をつくる</text><text x="1040" y="162" text-anchor="middle" font-size="20" fill="#4A4A4A">Text-to-Speech API</text></g>
+      <g data-node="4"><rect x="1220" y="60" width="190" height="150" rx="16" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="1315" y="122" text-anchor="middle">読み上げ</text><text x="1315" y="162" text-anchor="middle" font-size="20" fill="#4A4A4A">スピーカー</text></g>
+    </g>
+    <g stroke="#4A4A4A" stroke-width="3" fill="none" marker-end="url(#ah)"><path d="M224 135H294"/><path d="M504 135H574"/><path d="M844 135H914"/><path d="M1164 135H1214"/></g>
+    <rect x="560" y="240" width="620" height="56" rx="10" fill="none" stroke="#2F6DB5" stroke-width="3" stroke-dasharray="10 8"/>
+    <text x="870" y="277" text-anchor="middle" font-family="Noto Sans JP, sans-serif" font-size="22" fill="#2F6DB5">インターネットの向こう（Wi-Fi が必要）</text>
+    <circle data-dot r="14" cx="120" cy="135" fill="#171A3B" opacity="0" style="display:none"/>
+    <g transform="translate(150 360)">
+      <text x="0" y="0" font-family="Noto Sans JP, sans-serif" font-weight="700" font-size="26" fill="#111111">本体の LED</text>
+      <circle data-led cx="60" cy="90" r="52" fill="#2E9A55"/>
+      <text data-ledtxt x="140" y="100" font-family="Noto Sans JP, sans-serif" font-size="28" fill="#111111">緑：待機中（押せる）</text>
+    </g>
+    <g transform="translate(760 360)" font-family="Noto Sans JP, sans-serif" font-size="22" fill="#4A4A4A">
+      <text x="0" y="0" font-family="Noto Sans JP, sans-serif" font-weight="700" font-size="26" fill="#111111">効果音</text>
+      <text data-snd x="0" y="56" font-size="28" fill="#111111">—</text>
+      <text x="0" y="110">sound/ フォルダの wav ファイル</text>
+    </g>
+  </svg></div>
+</section>
+
+<!-- 5 system map -->
+<section class="slide" data-notes="部品間の接続。要点は2つ。<br>①メイン基板は Raspberry Pi の40ピンヘッダに重ねる拡張基板（HAT に相当）。<br>②カメラの信号は FFC でいったんメイン基板に入り、HDMI ケーブルでカメラユニットへ送られる（HDMI は映像出力ではなく、汎用の配線として使用）。">
+  <div class="pagehead"><div class="eyebrow">1 · 全体像</div><h2>部品間の接続</h2></div>
+  <div class="row grow">
+    <svg viewBox="0 0 1424 600" style="width:100%;height:100%" role="img" aria-label="システムのつながり図">
+      <defs><marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#111111"/></marker></defs>
+      <g font-family="Noto Sans JP, sans-serif" font-weight="700">
+        <rect x="40" y="40" width="760" height="520" rx="24" fill="#F0F0F0" stroke="#D0D0D0" stroke-width="3" stroke-dasharray="12 10"/>
+        <text x="70" y="88" font-size="28" fill="#4A4A4A">本体</text>
+        <rect x="90" y="120" width="300" height="150" rx="14" fill="#111111"/><text x="240" y="186" text-anchor="middle" fill="#fff" font-size="28">Raspberry Pi</text><text x="240" y="226" text-anchor="middle" fill="#BBBBBB" font-size="22">Zero 2 W</text>
+        <rect x="90" y="340" width="660" height="180" rx="14" fill="#171A3B"/><text x="420" y="400" text-anchor="middle" fill="#fff" font-size="30">メイン基板</text>
+        <text x="420" y="446" text-anchor="middle" fill="#C9CCE0" font-size="21" font-family="Noto Sans JP, sans-serif">音声（DAC・アンプ）／ボタン4個／RGB LED／音量</text>
+        <text x="420" y="484" text-anchor="middle" fill="#C9CCE0" font-size="21" font-family="Noto Sans JP, sans-serif">ヘッドホン端子／HDMI 端子／電源コネクタ</text>
+        <rect x="470" y="120" width="280" height="150" rx="14" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="610" y="186" text-anchor="middle" font-size="26" fill="#111111">スピーカー</text><text x="610" y="226" text-anchor="middle" font-size="20" fill="#4A4A4A" font-family="Noto Sans JP, sans-serif">SPK コネクタ</text>
+        <rect x="960" y="70" width="420" height="230" rx="24" fill="#F0F0F0" stroke="#D0D0D0" stroke-width="3" stroke-dasharray="12 10"/>
+        <text x="990" y="116" font-size="28" fill="#4A4A4A">カメラユニット</text>
+        <rect x="990" y="140" width="170" height="130" rx="12" fill="#5A5A5A"/><text x="1075" y="214" text-anchor="middle" fill="#fff" font-size="24">カメラ</text>
+        <rect x="1180" y="140" width="170" height="130" rx="12" fill="#171A3B"/><text x="1265" y="198" text-anchor="middle" fill="#fff" font-size="22">カメラ基板</text><text x="1265" y="232" text-anchor="middle" fill="#C9CCE0" font-size="18" font-family="Noto Sans JP, sans-serif">ボタン・LED</text>
+        <rect x="960" y="400" width="420" height="120" rx="14" fill="#E5E5E5" stroke="#E5E5E5" stroke-width="3"/><text x="1170" y="456" text-anchor="middle" font-size="26" fill="#111111">モバイルバッテリー</text><text x="1170" y="492" text-anchor="middle" font-size="20" fill="#4A4A4A" font-family="Noto Sans JP, sans-serif">USB → 5V コネクタ</text>
+      </g>
+      <g font-family="Noto Sans JP, sans-serif" font-size="20" fill="#111111" stroke-width="5" fill-opacity="1">
+        <path d="M240 270V340" stroke="#171A3B" marker-start="url(#ah2)" marker-end="url(#ah2)"/><text x="252" y="312">40ピン</text>
+        <path d="M150 270C150 300 130 320 130 340" stroke="#2F6DB5" fill="none" stroke-dasharray="10 6"/><text x="122" y="312" text-anchor="end" fill="#2F6DB5">FFC</text>
+        <path d="M610 340V274" stroke="#111111" marker-end="url(#ah2)"/>
+        <path d="M750 370H1215C1250 370 1265 355 1265 330V282" stroke="#171A3B" fill="none" marker-end="url(#ah2)"/><text x="820" y="356" font-weight="700">HDMI ケーブル</text>
+        <path d="M1160 205H1180" stroke="#111111"/>
+        <path d="M960 470H760" stroke="#C8423A" marker-end="url(#ah2)"/><text x="880" y="502" fill="#C8423A">5V</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- 6 raspberry pi -->
+<section class="slide" data-notes="Raspberry Pi Zero 2 W は、PHOTON GLASS の処理をすべて担うコンピュータ。<br>OS は Raspberry Pi OS（32-bit）。setup_pi.sh で、音声出力の設定（hifiberry-dac）、必要なライブラリ、自動起動のサービスなどをまとめて設定します。<br>メモリが 512 MB と少ないため、デスクトップ画面は起動しない設定にしています。">
+  <div class="pagehead"><div class="eyebrow">1 · Raspberry Pi</div><h2>Raspberry Pi Zero 2 W の役割</h2></div>
+  <div class="row" style="align-items:stretch">
+    <div class="card" style="flex:1;gap:14px">
+      <h3>仕様（PHOTON GLASS で使うところ）</h3>
+      <table class="t" style="font-size:21px">
+        <tr><th class="nw">項目</th><th>内容</th></tr>
+        <tr><td class="nw">SoC</td><td>RP3A0（Arm Cortex-A53 4コア 1 GHz）</td></tr>
+        <tr><td class="nw">メモリ</td><td>512 MB</td></tr>
+        <tr><td class="nw">無線</td><td>Wi-Fi 2.4 GHz（802.11 b/g/n）、Bluetooth 4.2</td></tr>
+        <tr><td class="nw">カメラ端子</td><td>CSI-2（22ピンの FFC）</td></tr>
+        <tr><td class="nw">40ピンヘッダ</td><td>GPIO・I2S・I2C・電源</td></tr>
+        <tr><td class="nw">記憶装置</td><td>microSD（OS とプログラム）</td></tr>
+        <tr><td class="nw">大きさ</td><td>65 × 30 mm</td></tr>
+      </table>
+    </div>
+    <div class="card" style="flex:1;gap:14px">
+      <h3>担っている処理</h3>
+      <table class="t" style="font-size:21px">
+        <tr><th class="nw">処理</th><th>しくみ</th></tr>
+        <tr><td class="nw">自動起動</td><td>systemd のサービス（photonglass）が <span class="mono">main_async.py</span> を起動</td></tr>
+        <tr><td class="nw">撮影</td><td>picamera2（libcamera）</td></tr>
+        <tr><td class="nw">ボタン・LED</td><td>gpiozero で GPIO を読み書き</td></tr>
+        <tr><td class="nw">音声出力</td><td>I2S で DAC へ（<span class="mono">dtoverlay=hifiberry-dac</span>）</td></tr>
+        <tr><td class="nw">通信</td><td>Wi-Fi 経由で Google Cloud の API を呼ぶ</td></tr>
+        <tr><td class="nw">遠隔操作</td><td>SSH（<span class="mono">photonXX.local</span>）</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 7 section -->
+<section class="slide dark" data-notes="ここから GitHub のドキュメント。製作手順・修正方法・利用条件がすべてここにまとまっています。<br>先に構成を把握しておくと、後半の基板の話で「どのデータを見ればよいか」が分かります。">
+  <div class="eyebrow">2</div>
+  <div class="col grow" style="justify-content:center;gap:30px">
+    <div class="secno">2</div>
+    <h1>GitHub の構成</h1>
+    <p class="lead">設計データ・プログラム・手順書を、1つのリポジトリで公開している。<br>構成を把握すれば、製作も改変も自分で進められる。</p>
+    <p class="mono" style="font-size:28px">github.com/photonglass/photonglass</p>
+  </div>
+</section>
+
+<!-- 8 repo map -->
+<section class="slide" data-notes="フォルダをクリックすると、内容と参照する場面が表示されます。<br>最初に読むのは README.md と docs/BUILD_GUIDE.md。">
+  <div class="pagehead"><div class="eyebrow">2 · リポジトリの地図</div><h2>リポジトリの構成</h2></div>
+  <div class="row grow">
+    <div class="card" style="flex:1;padding:18px 16px">
+      <div class="tree" data-tree>
+        <button data-k="readme"><span class="k">▸</span>README.md</button>
+        <button data-k="docs"><span class="k">▸</span>docs/</button>
+        <button data-k="hardware"><span class="k">▸</span>hardware/</button>
+        <div class="sub"><button data-k="mainb"><span class="k">·</span>main-board/</button><button data-k="camb"><span class="k">·</span>camera-board/</button></div>
+        <button data-k="enclosure"><span class="k">▸</span>enclosure/</button>
+        <div class="sub"><button data-k="mbody"><span class="k">·</span>main-body/</button><button data-k="cunit"><span class="k">·</span>camera-unit/</button><button data-k="usb"><span class="k">·</span>usb-power-cable/</button></div>
+        <button data-k="software"><span class="k">▸</span>software/</button>
+        <button data-k="charter"><span class="k">▸</span>CHARTER.md · LICENSE</button>
+      </div>
+    </div>
+    <div class="info" style="flex:1.3" data-treeinfo><div class="ref">フォルダをクリック</div><h3>フォルダを選ぶと、中身が出ます</h3><p>迷ったら、まず <span class="mono">README.md</span> と <span class="mono">docs/BUILD_GUIDE.md</span>。</p></div>
+  </div>
+</section>
+
+<!-- 9 build order -->
+<section class="slide" data-notes="BUILD_GUIDE.md の順番です。どの作業で、どのドキュメントを読めばいいかが表になっています。<br>Raspberry Pi の準備は SETUP_RASPBERRY_PI.md。setup_pi.sh を使うと、ほとんどを自動でやってくれます。">
+  <div class="pagehead"><div class="eyebrow">2 · docs/BUILD_GUIDE.md</div><h2>製作の手順と参照するドキュメント</h2></div>
+  <table class="t steps" style="font-size:22px"><tr><th>手順</th><th>作業</th><th>内容</th><th>読むファイル</th></tr>
+    <tr><td class="no">0</td><td class="w">そろえる</td><td>部品・Raspberry Pi・ケーブル・バッテリー</td><td class="f">docs/BUILD_GUIDE.md</td></tr>
+    <tr><td class="no">1–2</td><td class="w">基板</td><td>JLCPCB に発注して、7個を手はんだ</td><td class="f">hardware/JLCPCB_ORDERING.md</td></tr>
+    <tr><td class="no">3</td><td class="w">印刷</td><td>Bambu Lab A1・PETG で筐体を印刷</td><td class="f">enclosure/*/README.md</td></tr>
+    <tr><td class="no">4</td><td class="w">組み立て</td><td>電源ケーブルは +/− を必ず確認</td><td class="f">enclosure/usb-power-cable/README.md</td></tr>
+    <tr><td class="no">5</td><td class="w">Pi の準備</td><td>OS・音・プログラム・API キー（setup_pi.sh でほぼ自動）</td><td class="f">docs/SETUP_RASPBERRY_PI.md</td></tr>
+    <tr><td class="no">6</td><td class="w">テスト</td><td>LED → ボタン → スピーカー → カメラ</td><td class="f">software/test/hw_test.py</td></tr>
+    <tr><td class="no">7</td><td class="w">動かす</td><td>電源を入れたら自動で起動</td><td class="f">software/main_async.py</td></tr>
+  </table>
+  <div class="row" style="flex-shrink:0">
+    <div class="card" style="flex:1;align-self:stretch"><h3>動作しないとき</h3><p class="small"><span class="mono">check_setup.sh</span> で準備の状態を確認できる。解決しない場合は GitHub の <b>Issues</b> で質問する。</p></div>
+    <div class="card" style="flex:1;align-self:stretch"><h3>API キーは公開しない</h3><p class="small"><span class="mono">api_key.txt</span> は各自で作成するファイル。GitHub や SNS には載せない。SD カードのイメージにも含まれる。</p></div>
+  </div>
+</section>
+
+<!-- 10 license -->
+<section class="slide" data-notes="3種類のライセンスはいずれも「継承（コピーレフト）」型。製作・販売・改変は自由だが、配布するときは同じライセンスで公開し、出典と変更点を示す必要がある。">
+  <div class="pagehead"><div class="eyebrow">2 · ライセンス</div><h2>OSS におけるルール</h2></div>
+  <div class="lic">
+    <div class="card"><span class="tag">ハードウェア</span><h3>CERN-OHL-S v2</h3><p class="small">基板・筐体の設計データ。基板のシルクにも記載。</p></div>
+    <div class="card"><span class="tag">ソフトウェア</span><h3>GPL-3.0</h3><p class="small"><span class="mono">software/</span> のプログラム。</p></div>
+    <div class="card"><span class="tag cu">文書・画像・音</span><h3>CC BY-SA 4.0</h3><p class="small">README・写真・効果音など。</p></div>
+  </div>
+  <div class="row">
+    <div class="card" style="flex:1"><h3>できること</h3><ul style="padding-left:1.2em"><li class="small">誰でも無償で製作・使用・販売できる</li><li class="small">自由に改変できる</li></ul></div>
+    <div class="card" style="flex:1"><h3>守ること</h3><ul style="padding-left:1.2em"><li class="small">配布・販売するときは、同じライセンスで設計データも公開する</li><li class="small">著作権とライセンスの表示を残し、改変した箇所を明記する</li></ul></div>
+  </div>
+  <p class="small">個人で使うだけなら、改変したデータを公開する義務はない。正確な条件は各ライセンスの全文で確認すること。</p>
+</section>
+
+<!-- 11 github vs scrapbox -->
+<section class="slide" data-notes="情報の置き場所は2つ。迷ったら「PHOTON GLASS を作る・直すのに必要か（→ GitHub）」「この授業を運営するのに必要か（→ Scrapbox）」で判断します。<br>パスワード・API キー・Wi-Fi・IP アドレスは、公開の GitHub には書かない。">
+  <div class="pagehead"><div class="eyebrow">2 · 情報の置き場所</div><h2>GitHub と Scrapbox の使い分け</h2></div>
+  <table class="t" style="font-size:22px">
+    <tr><th class="nw"></th><th>GitHub（photonglass/photonglass）</th><th>Scrapbox（授業用プロジェクト）</th></tr>
+    <tr><td class="nw"><b>公開範囲</b></td><td>公開（誰でも閲覧できる）</td><td>非公開（メンバーのみ）</td></tr>
+    <tr><td class="nw"><b>置くもの</b></td><td>設計データ、プログラム、製作・セットアップの手順書、ライセンス</td><td>授業の準備と当日の進め方、ネットワークと接続情報、受講者向けの操作メモ</td></tr>
+    <tr><td class="nw"><b>更新の仕方</b></td><td>ブランチで変更し、Pull Request で確認してから main に入れる。履歴がすべて残る</td><td>メンバーがその場で書き換える。授業ごとに変わる情報に向く</td></tr>
+    <tr><td class="nw"><b>質問・報告</b></td><td>不具合や改善の提案は Issues へ</td><td>授業の連絡、当日の困りごと</td></tr>
+    <tr><td class="nw"><b>書かないもの</b></td><td>パスワード、API キー、Wi-Fi の名前とパスワード、IP アドレス</td><td>（非公開なので書いてよい。ただし GitHub には書き写さない）</td></tr>
+  </table>
+  <div class="card"><h3>判断の目安</h3><p class="small">PHOTON GLASS を作る・直すために誰もが必要とする情報なら GitHub。この授業を運営するためだけの情報なら Scrapbox。</p></div>
+</section>
+
+<!-- 12 section -->
+<section class="slide dark" data-notes="ここから基板と電気回路。最も時間をかけるパートです。<br>先ほどの hardware/ のデータを、実物の部品と回路図で追っていきます。">
+  <div class="eyebrow">3</div>
+  <div class="col grow" style="justify-content:center;gap:30px">
+    <div class="secno">3</div>
+    <h1>基板と<br>電気回路</h1>
+    <p class="lead">基板上の銅箔パターンが部品間を配線している。<br>信号と電源がどこを通るかを、回路図と実物の両方で追う。</p>
+  </div>
+</section>
+
+<!-- 13 layers -->
+<section class="slide" data-notes="再生すると、メイン基板が層に分かれます。下から、FR-4（基材）、銅箔（配線）、ソルダーレジスト、シルク、部品。<br>緑色は基材ではなく、銅箔を保護するソルダーレジストの色です。<br>この基板は2層で、表裏の配線はビアで接続しています。">
+  <div class="pagehead"><div class="eyebrow">3 · 基板 · 動画</div><h2>基板の層構造</h2></div>
+  <div class="row grow">
+    <div class="viewer" style="flex:1.6" data-model="main_board" data-mode="layers"><div class="loading">3Dを読み込み中…</div><div class="hint">ドラッグで回せます</div>
+      <div class="ctrl"><button class="btn" data-play>▶ 分ける</button><span class="lbl">重ねる</span><input type="range" min="0" max="1000" value="0" aria-label="層の開き具合" data-slider><span class="lbl">分ける</span></div></div>
+    <div class="col" style="flex:1;gap:10px">
+      <div class="card" style="padding:12px 20px;gap:4px"><span class="tag cu">部品</span><p class="small" style="font-size:21px;line-height:1.5">IC・コネクタ・抵抗など。JLCPCB が載せてはんだ付けまでする（7個だけ手はんだ）。</p></div>
+      <div class="card" style="padding:12px 20px;gap:4px"><span class="tag" style="background:#E8EAE6;color:#111111">シルク</span><p class="small" style="font-size:21px;line-height:1.5">白い文字。部品の名前（R1、CN3…）や向きの印。</p></div>
+      <div class="card" style="padding:12px 20px;gap:4px"><span class="tag">ソルダーレジスト</span><p class="small" style="font-size:21px;line-height:1.5">緑の膜。銅がさびたり、はんだが広がったりするのを防ぐ。</p></div>
+      <div class="card" style="padding:12px 20px;gap:4px"><span class="tag cu">銅箔</span><p class="small" style="font-size:21px;line-height:1.5">配線そのもの。表と裏の2層を、ビア（小さな穴）でつなぐ。</p></div>
+      <div class="card" style="padding:12px 20px;gap:4px"><span class="tag">板（FR-4）</span><p class="small" style="font-size:21px;line-height:1.5">ガラス繊維＋樹脂。厚さ 1.6 mm。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 main board interactive -->
+<section class="slide" data-notes="部品をクリックさせてみてください。下のボタンからも選べます。<br>大事な部品は4つ：40ピンソケット（Pi とつながる）、PCM5102A（音をアナログに）、PAM8304（音を大きく）、HDMI 端子（カメラへ）。<br>メインボタンだけ裏面に付いています。">
+  <div class="pagehead"><div class="eyebrow">3 · メイン基板 OG19AWv2 · 79 × 42 mm</div><h2>メイン基板の主な部品</h2></div>
+  <div class="row grow">
+    <div class="viewer" style="flex:1.5" data-model="main_board" data-mode="pick" data-info="#info-main"><div class="loading">3Dを読み込み中…</div><div class="hint">部品をクリック／ドラッグで回す</div></div>
+    <div class="col" style="flex:1">
+      <div class="info" id="info-main"><div class="ref">クリックして選ぶ</div><h3>部品をクリックすると説明を表示</h3><p>ドラッグで回転、ホイールやピンチで拡大できる。</p></div>
+      <div class="chips" data-chips="#info-main">
+        <button class="chip" data-pick="part_U_1">40ピン</button><button class="chip" data-pick="part_PCM5102A">DAC</button><button class="chip" data-pick="part_PAM8304">アンプ</button><button class="chip" data-pick="part_CN3">HDMI</button><button class="chip" data-pick="part_CN2">FFC</button><button class="chip" data-pick="part_CN1">イヤホン</button><button class="chip" data-pick="part_U_3">LED</button><button class="chip" data-pick="part_VR1">音量</button><button class="chip" data-pick="part_SW_MAIN">メインボタン</button><button class="chip" data-pick="part_5V">電源</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 schematic -->
+<section class="slide" data-anim="sch" data-notes="KiCad の回路図（hardware/main-board/kicad/）。右の項目を選ぶと、該当する範囲が強調されます。<br>読む順番は、①40ピン（Raspberry Pi）→ ④DAC → ⑤音量・イヤホン → ⑥アンプ、と音声の流れに沿うと追いやすい。<br>回路図では、同じ名前のラベル（BCK・LRCK・DIN など）が付いた線どうしがつながっています。">
+  <div class="pagehead"><div class="eyebrow">3 · 回路図</div><h2>メイン基板の回路図</h2></div>
+  <div class="row grow" style="align-items:stretch">
+    <div class="schwrap" style="flex:1.75">
+      <svg viewBox="0 0 341.173 264.947" role="img" aria-label="メイン基板の回路図" data-sch>
+        <image href="images/main_schematic.svg" x="0" y="0" width="341.173" height="264.947"/>
+        <g data-blk="1"><rect x="68" y="18" width="142" height="92"/><text x="72" y="30">1</text></g>
+        <g data-blk="2"><rect x="214" y="16" width="44" height="70"/><text x="218" y="28">2</text></g>
+        <g data-blk="3"><rect x="14" y="104" width="100" height="86"/><text x="18" y="116">3</text></g>
+        <g data-blk="4"><rect x="122" y="108" width="114" height="68"/><text x="126" y="120">4</text></g>
+        <g data-blk="5"><rect x="70" y="192" width="122" height="54"/><text x="74" y="204">5</text></g>
+        <g data-blk="6"><rect x="226" y="182" width="104" height="60"/><text x="230" y="194">6</text></g>
+      </svg>
+    </div>
+    <div class="col" style="flex:1;gap:8px">
+      <div class="schlist" data-schlist>
+        <button data-b="1"><b>1</b><span>カメラの配線（CN2・CN3）<small>FFC の信号を HDMI 端子へそのまま中継</small></span></button>
+        <button data-b="2"><b>2</b><span>ボタン（SW_MAIN・SUB・UP・DOWN）<small>押すと信号線が GND につながる</small></span></button>
+        <button data-b="3"><b>3</b><span>40ピンヘッダと RGB LED<small>GPIO の割り当て、LED と電流制限抵抗</small></span></button>
+        <button data-b="4"><b>4</b><span>DAC（PCM5102A）<small>I2S（BCK・LRCK・DIN）をアナログ音声へ</small></span></button>
+        <button data-b="5"><b>5</b><span>音量（VR1）とイヤホン端子（CN1）<small>挿すとアンプへの経路が切れるスイッチ付き</small></span></button>
+        <button data-b="6"><b>6</b><span>アンプ（PAM8304）とスピーカー<small>D級アンプでスピーカーを駆動</small></span></button>
+      </div>
+      <p class="small" style="font-size:18px;margin-top:auto">同じ名前のラベル（BCK・SW_CAM など）が付いた線は、図の上で離れていても接続されている。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 16 header pins -->
+<section class="slide" data-anim="pins" data-notes="40ピンのうち、PHOTON GLASS が使うのは色の付いたピンのみ。<br>プログラム中の GPIO 番号（BCM 番号）は、物理的なピン番号とは異なる点に注意。<br>例：カメラボタンは物理 11 番 = GPIO17。">
+  <div class="pagehead"><div class="eyebrow">3 · 40ピンヘッダ</div><h2>40ピンヘッダの割り当て</h2></div>
+  <div class="legend"><span><i style="background:var(--led-b)"></i>音声（I2S）</span><span><i style="background:#E0A030"></i>ボタン</span><span><i style="background:var(--led-g)"></i>LED</span><span><i style="background:var(--led-r)"></i>電源</span><span><i style="background:#555b57"></i>GND（0 V）</span><span><i style="background:#2c312e;border:2px solid #6b726e"></i>使っていない</span></div>
+  <div class="header40" data-header></div>
+  <div class="row grow">
+    <div class="info" style="flex:1" data-pininfo><div class="ref">ピンをクリック</div><h3>ピンをクリックすると役割を表示</h3><p>上段が偶数番、下段が奇数番。左端が 1・2 番。</p></div>
+    <div class="card" style="flex:1"><h3>プログラムの中では</h3><p class="mono" style="font-size:22px;line-height:1.7">camera_button = Button(17)<br>sub_button = Button(22)<br>red_LED = LED(9)</p><p class="small">引数は GPIO（BCM）番号で、物理ピン番号とは異なる。</p></div>
+  </div>
+</section>
+
+<!-- 17 audio path -->
+<section class="slide" data-anim="audio" data-notes="Raspberry Pi の中では、音声はデジタルデータ。<br>DAC（PCM5102A）がアナログ信号に変換し、音量つまみ（VR1）を経てイヤホン端子へ。<br>イヤホンが挿さっていなければ、端子内のスイッチを通ってアンプ（PAM8304）に入り、スピーカーを駆動できる電力まで増幅されます。<br>イヤホンを挿すとスピーカーが鳴らなくなるのは、このスイッチによるものです。">
+  <div class="pagehead"><div class="eyebrow">3 · 回路 · 動画</div><h2>音声信号の経路</h2></div>
+  <div class="row" style="gap:16px;align-items:center"><button class="btn" data-play>▶ 再生</button><button class="btn ghost" data-toggle-jack>イヤホンを挿す</button><span class="small" data-jackstate>いま：イヤホンなし → スピーカーが鳴る</span></div>
+  <div class="grow" style="position:relative"><canvas data-audio style="width:100%;height:100%;display:block"></canvas></div>
+  <details class="more"><summary>補足</summary><p>Pi → DAC は I2S という3本の線：BCK（ビットのリズム）＝物理12番、LRCK（左右の切り替え）＝35番、DIN（データ）＝40番。PAM8304 は D級アンプ。高速にスイッチして増幅するので、熱になって逃げる電力が少ない。</p></details>
+</section>
+
+<!-- 18 camera board + HDMI -->
+<section class="slide" data-anim="hdmi" data-notes="カメラ基板（39.3 × 17.2 mm）。HDMI 端子、カメラ用の FFC コネクタ、シャッターのボタン、LED が載っています。<br>HDMI ケーブルの中には、ねじった線のペアが入っています。カメラの信号（MIPI CSI-2）もペアの線で送るので、そのまま流用できる。映像を出しているわけではありません。<br>余った線は、ボタン・LED・3.3V に使っています。">
+  <div class="pagehead"><div class="eyebrow">3 · カメラ基板 OG19 PC · 39.3 × 17.2 mm</div><h2>カメラユニットの仕組み</h2></div>
+  <div class="row grow">
+    <div class="col" style="flex:1">
+      <div class="viewer grow" data-model="camera_board" data-mode="pick" data-info="#info-cam"><div class="loading">3Dを読み込み中…</div><div class="hint">部品をクリック</div></div>
+      <div class="info" id="info-cam" style="max-height:230px"><div class="ref">クリックして選ぶ</div><h3>部品をクリックすると、説明が出ます</h3></div>
+    </div>
+    <div class="card" style="flex:1.15;gap:8px">
+      <h3>HDMI ケーブルの各線の用途</h3>
+      <table class="t" style="font-size:21px"><tr><th class="nw">HDMI の線</th><th>本来の用途</th><th>PHOTON GLASS では</th></tr>
+        <tr><td class="mono nw">1·3<br>4·6<br>7·9</td><td>映像データのペア</td><td><b>カメラの画像</b>（データ2本＋クロック）</td></tr>
+        <tr><td class="mono nw">10·12</td><td>クロックのペア</td><td>カメラの電源オン・LED</td></tr>
+        <tr><td class="mono nw">13·15</td><td>CEC・SCL</td><td>カメラの設定（I2C）</td></tr>
+        <tr><td class="mono nw">16</td><td>SDA</td><td><b>カメラボタン</b> → GPIO17</td></tr>
+        <tr><td class="mono nw">14</td><td>予備</td><td>カメラ基板の LED</td></tr>
+        <tr><td class="mono nw">18</td><td>+5V</td><td>3.3 V の電源</td></tr></table>
+      <p class="small">HDMI は映像出力には使わず、差動ペアを含む汎用の配線として使っている。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 19 how boards are made -->
+<section class="slide" data-notes="設計データから基板が届くまで。<br>設計は KiCad（無料）か Fusion。そこから「ガーバー」（層ごとの図面）と、部品表（BOM）・部品の位置（CPL）を作って JLCPCB に送ると、基板を作って部品まで載せてくれます。<br>ただし、ボタン・音量つまみ・コネクタの7個は自分ではんだ付けします。">
+  <div class="pagehead"><div class="eyebrow">3 · 製造</div><h2>設計データから基板ができるまで</h2></div>
+  <table class="t steps" style="font-size:22px"><tr><th>手順</th><th>作業</th><th>内容</th><th>ファイル</th></tr>
+    <tr><td class="no">01</td><td class="w">回路図・基板を設計</td><td>KiCad 9 以降、または Fusion（Eagle 形式）</td><td class="f">hardware/*/kicad/</td></tr>
+    <tr><td class="no">02</td><td class="w">ガーバーを作る</td><td>層ごとの図面（銅箔・レジスト・シルク・穴・外形）</td><td class="f">hardware/*/gerber/</td></tr>
+    <tr><td class="no">03</td><td class="w">部品表と位置</td><td>BOM（何を）と CPL（どこに・どの向きで）</td><td class="f">hardware/*/jlcpcb-assembly/</td></tr>
+    <tr><td class="no">04</td><td class="w">JLCPCB に発注</td><td>基板の製造と部品の実装まで。数週間で届く</td><td class="f">hardware/JLCPCB_ORDERING.md</td></tr>
+    <tr><td class="no">05</td><td class="w">手はんだ 7 個</td><td>音量つまみ、ボタン4個、電源・スピーカーのコネクタ</td><td class="f">docs/parts_list.md</td></tr>
+  </table>
+  <div class="row">
+    <div class="card" style="flex:1"><h3>入手できない部品は代替品に変更</h3><p class="small">元の設計（2019年）には入手できなくなった部品があった。現行品に置き換え、全部品のピン配置をデータシートと照合済み（不一致 0）。</p></div>
+    <div class="card" style="flex:1"><h3>版はシルクで確認できる</h3><p class="small">メイン基板 <b class="mono">2026 / PB-4</b>、カメラ基板 <b class="mono">2026 / PC-4</b>。手元の基板の版はシルク印刷で確認できる。</p></div>
+  </div>
+</section>
+
+<!-- 20 hack -->
+<section class="slide" data-notes="拡張の入口。最も手軽なのは、未使用のボタン（メイン・上・下）に機能を割り当てること。<br>プログラムは main_seq.py（逐次版）から読むと理解しやすい。<br>変更しても photonglass-reset で初期状態に戻せます。<br>最後に質疑の時間を取ってください。">
+  <div class="pagehead"><div class="eyebrow">3 · 改造の入口</div><h2>拡張の余地</h2></div>
+  <div class="row">
+    <div class="card" style="flex:1"><span class="tag cu">ボタン</span><h3>未使用のボタンが3つ</h3><p class="small">メイン（GPIO27）・上（GPIO23）・下（GPIO24）は、現在のプログラムでは未使用。再読み上げや話速の変更などを割り当てられる。</p></div>
+    <div class="card" style="flex:1"><span class="tag">プログラム</span><h3>まず main_seq.py を読む</h3><p class="small">処理を1つずつ順に行う逐次版で、流れを追いやすい。実際に動いているのは、処理中もボタンに反応できる非同期版の <span class="mono">main_async.py</span>。</p></div>
+    <div class="card" style="flex:1"><span class="tag">筐体</span><h3>パラメトリックな筐体</h3><p class="small">カメラユニットは <span class="mono">src/camera_case.py</span>（CadQuery）で定義。寸法を変えて実行すると全部品を再生成できる。</p></div>
+  </div>
+  <div class="card"><h3>変更は元に戻せる</h3><p class="small">プログラムを変更して動かなくなった場合は、Raspberry Pi で <span class="mono">photonglass-reset</span> を実行すると初期状態に戻る（変更したファイルは backup フォルダに残る）。</p></div>
+</section>
+
+</div></div>
+
+<nav class="navbar" aria-label="スライドの操作">
+  <button class="navbtn" id="prev" aria-label="前のスライド">←</button>
+  <span class="count" id="count">1 / 21</span>
+  <button class="navbtn" id="next" aria-label="次のスライド">→</button>
+  <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+  <button class="navbtn" id="langBtn" onclick="location.href='en.html'+location.hash" aria-label="English version">EN</button>
+  <button class="navbtn" id="notesBtn" aria-pressed="false">メモ (N)</button>
+  <button class="navbtn" id="fsBtn">全画面 (F)</button>
+</nav>
+<div class="notes" id="notes" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+(()=>{
+'use strict';
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+/* ---------------- deck ---------------- */
+const stage=$('#stage'), slides=$$('.slide'); let cur=0;
+function fit(){const vw=innerWidth,vh=innerHeight-0;const s=Math.min(vw/1600,vh/900);stage.style.transform=`translate(-50%,-50%) scale(${s})`;viewer.resize();}
+function go(i,push=true){
+  i=clamp(i,0,slides.length-1); slides[cur].classList.remove('active'); stopAnims(slides[cur]);
+  cur=i; const el=slides[cur]; el.classList.add('active');
+  $('#count').textContent=`${cur+1} / ${slides.length}`; $('#bar').style.width=((cur+1)/slides.length*100)+'%';
+  $('#notes').innerHTML=el.dataset.notes||'（メモなし）';
+  if(push){try{history.replaceState(null,'','#slide-'+(cur+1))}catch(e){}}
+  viewer.attach(el); startAnims(el);
+}
+$('#prev').onclick=()=>go(cur-1); $('#next').onclick=()=>go(cur+1);
+const toggleNotes=()=>{const n=$('#notes');n.hidden=!n.hidden;$('#notesBtn').setAttribute('aria-pressed',String(!n.hidden))};
+$('#notesBtn').onclick=toggleNotes;
+const toggleFs=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}};
+$('#fsBtn').onclick=toggleFs;
+addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea'))return;
+  const k=e.key;
+  if(['ArrowRight','PageDown',' '].includes(k)){e.preventDefault();go(cur+1)}
+  else if(['ArrowLeft','PageUp'].includes(k)){e.preventDefault();go(cur-1)}
+  else if(k==='Home')go(0); else if(k==='End')go(slides.length-1);
+  else if(k==='n'||k==='N')toggleNotes(); else if(k==='f'||k==='F')toggleFs();
+});
+let tx=null;stage.addEventListener('touchstart',e=>{if(e.target.closest('.viewer,input,button'))return;tx=e.touches[0].clientX},{passive:true});
+stage.addEventListener('touchend',e=>{if(tx==null)return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>60)go(cur+(d<0?1:-1));tx=null});
+addEventListener('hashchange',()=>{const m=location.hash.match(/slide-(\d+)/);if(m)go(+m[1]-1,false)});
+
+/* ---------------- 3D ---------------- */
+const INFO={
+ board_body:['FR-4','基板の板','ガラス繊維に樹脂をしみこませた板。厚さ 1.6 mm。電気を通さない。'],
+ board_mask:['レジスト','ソルダーレジスト（緑の膜）','銅箔を守る膜。はんだ付けする所（パッド）だけ穴が開いている。'],
+ board_copper:['銅箔','配線（銅箔）','部品どうしをつなぐ銅の線。表と裏の2層で、ビアという穴で上下をつなぐ。'],
+ board_silk:['シルク','シルク（白い文字）','部品の名前や向きの印。PHOTON GLASS・URL・ライセンスもここに印刷してある。'],
+ part_U_1:['U$1','40ピンソケット','Raspberry Pi Zero 2 W をここに挿す。電源・音声・ボタン・LED の信号がすべてここを通る。','高さ 8.5 mm の汎用ソケット（BOOMELE 2.54-2*20P）。'],
+ part_PCM5102A:['PCM5102A','オーディオ DAC','Raspberry Pi から届く「数字の音（デジタル）」を、「電圧の波（アナログ）」に変える IC。','TI 製。I2S（BCK・LRCK・DIN の3本）で受け取る。40ピンの 12・35・40 番。'],
+ part_PAM8304:['PAM8304','スピーカーアンプ','DAC の小さな信号を、スピーカーを鳴らせる大きさまで増幅する。','D級アンプ（Diodes 製）。イヤホンを挿すと入力が切れ、スピーカーは鳴らない。'],
+ part_CN1:['CN1','ヘッドホンジャック 3.5 mm','イヤホンをつなぐ口。挿すと、スピーカーへの信号が切れる「スイッチ付き」。','4極品（CUI SJ-43516）を、3極と同じ動きになるようにつないでいる。'],
+ part_CN2:['CN2','カメラ用 FFC コネクタ（22ピン）','Raspberry Pi のカメラ端子と、平たいケーブル（FFC）でつなぐ。','カメラの信号はここから基板の配線を通って HDMI 端子へ。'],
+ part_CN3:['CN3','HDMI 端子','カメラ基板へつなぐための口。モニター用ではない。','HDMI ケーブルの線を、カメラの信号・ボタン・LED・3.3 V に使う。'],
+ part_U_3:['U$3','RGB LED','赤・緑・青の3色で状態を知らせる。','緑＝待機、黄＝通信中、青＝読み上げ中、赤＝エラー。GPIO 9（赤）・11（緑）・10（青）。'],
+ part_VR1:['VR1','音量ボリューム（2連）','回すと抵抗の比が変わり、音の大きさが変わる。左右2ch分が1つになっている。','手はんだで付ける部品（aitendo R1001G16T2B-B10K）。'],
+ part_SW_MAIN:['SW_MAIN','メインボタン（裏面）','本体の大きな丸いボタンの真下にある。','GPIO27。今のプログラムでは使っていない＝改造の余地。手はんだ。'],
+ part_SW_SUB:['SW_SUB','サブボタン','読み上げを途中で止める。','GPIO22。横から押すタイプ（SKHHLPA010）。手はんだ。'],
+ part_SW_UP:['SW_UP','上ボタン','今のプログラムでは使っていない。','GPIO23。手はんだ。'],
+ part_SW_DOWN:['SW_DOWN','下ボタン','今のプログラムでは使っていない。','GPIO24。手はんだ。'],
+ part_5V:['5V','電源コネクタ','モバイルバッテリーからの 5 V を受ける。','+ と − を逆にすると Raspberry Pi が壊れる。つなぐ前に必ずテスターで確認。'],
+ part_SPK:['SPK','スピーカーコネクタ','スピーカーをつなぐ2ピンのコネクタ。','向きは hardware/main-board/images/speaker_connector_orientation.png。'],
+};
+const R_INFO={R1:'音声の通り道（470 Ω）',R2:'音声の通り道（470 Ω）',R3:'スピーカー側への音声（470 Ω）',R4:'スピーカー側への音声（470 Ω）',R5:'アンプの入力（470 kΩ）',R6:'アンプの入力（470 kΩ）',R7:'LED の電流を決める（40.2 Ω）',R8:'LED の電流を決める（40.2 Ω）',R9:'LED の電流を決める（40.2 Ω）'};
+const C_INFO={C1:'電源を安定させる（2.2 µF）',C5:'DAC 出力のフィルタ（2200 pF）',C6:'DAC 出力のフィルタ（2200 pF）'};
+const CAM_INFO={
+ part_CN1:['CN1','HDMI 端子','メイン基板からの HDMI ケーブルを挿す。','中の線で、カメラの画像・ボタン・LED・3.3 V が行き来する。'],
+ part_CN2:['CN2','カメラ用 FFC コネクタ','カメラ（Zero Spy Camera）の平たいケーブルを挿す。','パッドの番号が実部品と逆順になっている（元設計どおり）。'],
+ part_SW1:['SW1','カメラボタン（シャッター）','筐体のシャッターを押すと、このボタンが押される。','HDMI の 16 番の線 → メイン基板 → GPIO17。10 kΩ（R1）でプルアップ。'],
+ part_GND:['LED','表示 LED（赤）','カメラ基板の小さな LED。部品名が「GND」になっているのは元設計のなごり。','1 kΩ（R3）で電流を決める。GPIO8 から点ける。'],
+ part_R1:['R1','プルアップ抵抗 10 kΩ','ボタンを離しているとき、信号を 3.3 V に保つ。',''],
+ part_R2:['R2','プルアップ抵抗 10 kΩ','予備の線（SW2）のプルアップ。',''],
+ part_R3:['R3','LED の抵抗 1 kΩ','LED に流れる電流を決める。',''],
+};
+const CU_INFO={
+ cu_body:['body','本体（筒・シャッター一体）','カメラユニットの外側。シャッターは筒と一体の「板ばね」で、押すと中のボタンを押す。','PETG で印刷（割れにくい）。レンズ側を下にして立てて印刷。'],
+ cu_nose:['nose','カメラの蓋','カメラを前から押さえる。レンズの穴が開いている。',''],
+ cu_tail:['tail','後ろキャップ','筒の後ろをふさぐ。きついときは tail_loose を使う。',''],
+ cu_sled:['sled','スレッド（台）','カメラ基板をネジで留め、カメラをテープで貼る台。筒に差し込む。',''],
+ cu_clip:['temple_tie_clip','メガネ用アタッチメント','結束バンドでメガネのつるに留める。','爪の舌の下だけサポートが要る。'],
+ cu_camera:['camera','カメラ（Zero Spy Camera）','8.6 × 8.6 mm の小さなカメラ。この3Dでは形を簡略化している。','FFC ケーブルでカメラ基板の CN2 につなぐ。'],
+};
+const MB_INFO={
+ body_front:['body_front','ボディ前面','本体の外側の面。メインボタンの大きな穴がある。左の壁に、状態ランプのレンズを入れる窓がある。','外側の面を下にして印刷。'],
+ body_back:['body_back','ボディ背面','前面にネジ4本（FBP-0208EB）で留める。','外側の面を下にして印刷（設計データから裏返す）。'],
+ body_side:['body_side','ボディ側面','側面のふた。音量つまみ（VR1）の窓と、上・下ボタンがある。','窓の両わきに「＋」「−」の印がある。'],
+ main_button:['main_button','メインボタン','前面の丸い穴に内側からはめる。押すと裏面の SW_MAIN を押す。','閉じた底を下にして印刷。'],
+ sub_button:['sub_button','サブボタン','押すと SW_SUB を押す（読み上げを止める）。','楕円のつばを下、軸を上に立てて印刷。つばの下だけサポート。'],
+ status_lens:['status_lens','状態確認レンズ','LED の色を外から見えるようにする、透明の小さな部品。','透明 PETG・充填 100%・ゆっくり熱めに印刷すると光がよく通る。'],
+};
+function infoFor(model,name){
+  if(!name)return null;
+  if(model==='main_board'){
+    if(INFO[name])return INFO[name];
+    const ref=name.replace('part_','');
+    if(/^R\d/.test(ref))return [ref,'抵抗',R_INFO[ref]||'抵抗','電流の流れにくさを決める部品。0603 サイズ（1.6 × 0.8 mm）。'];
+    if(/^C\d/.test(ref))return [ref,'コンデンサ',C_INFO[ref]||'パスコン 0.1 µF：電源のノイズを吸い取る','電気を一時的にためる部品。IC のすぐ近くに置く。'];
+  }
+  if(model==='camera_board'){ if(name.startsWith('board_'))return INFO[name]; return CAM_INFO[name]; }
+  if(model==='camera_unit'){ if(name.startsWith('cb_'))return ['camera board','カメラ基板','スレッドの上にネジで留める。部品の面を下に向けて入る。','前のページで見た基板。']; return CU_INFO[name]; }
+  if(model==='main_body')return MB_INFO[name];
+  return null;
+}
+const MODELS={
+  main_board:{url:'models/main_board.glbz.txt',zup:false},
+  camera_board:{url:'models/camera_board.glbz.txt',zup:false},
+  camera_unit:{url:'models/camera_unit.glbz.txt',zup:true},
+  main_body:{url:'models/main_body.glbz.txt',zup:true},
+};
+// explode offsets (model units: mm, z-up) and assembly timing [start,end]
+const EXPLODE={
+  camera_unit:n=>{
+    if(n.startsWith('cb_'))return {v:[-45,0,26],t:[.18,.42]};
+    return ({cu_camera:{v:[-70,0,0],t:[0,.22]},cu_sled:{v:[-45,0,0],t:[.42,.62]},cu_nose:{v:[-95,0,0],t:[.62,.78]},cu_tail:{v:[30,0,0],t:[.74,.88]},cu_clip:{v:[0,0,-22],t:[.86,1]}})[n]||{v:[0,0,0],t:[0,1]};
+  },
+  main_body:n=>({status_lens:{v:[30,0,8],t:[0,.18]},sub_button:{v:[40,0,0],t:[.12,.34]},main_button:{v:[0,0,38],t:[.3,.52]},body_side:{v:[0,-40,0],t:[.5,.72]},body_back:{v:[0,0,70],t:[.72,1]},body_front:{v:[0,0,0],t:[0,1]}})[n]||{v:[0,0,0],t:[0,1]},
+};
+const viewer=(()=>{
+  if(!window.THREE){return {attach(el){$$('.viewer .loading',el).forEach(l=>l.textContent='3Dを読み込めませんでした（インターネット接続を確認）')},resize(){},pick(){}}}
+  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.outputEncoding=THREE.sRGBEncoding; renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  const cam=new THREE.PerspectiveCamera(32,1,.01,1000);
+  const controls=new THREE.OrbitControls(cam,renderer.domElement); controls.enableDamping=true; controls.dampingFactor=.08;
+  const loader=new THREE.GLTFLoader(); const cache={};
+  let host=null, scene=null, root=null, mode=null, modelKey=null, picked=null, infoEl=null, anim=null, slider=null, labels=[], spin=false;
+  const raycaster=new THREE.Raycaster(), ptr=new THREE.Vector2();
+  function load(key){
+    if(cache[key])return cache[key];
+    // models are gzip + base64 text files (the host serves text, not .glb)
+    const fetchGlb=async url=>{const t=(await (await fetch(url)).text()).replace(/\s+/g,'');const bin=Uint8Array.from(atob(t),c=>c.charCodeAt(0));
+      const ds=new Response(new Blob([bin]).stream().pipeThrough(new DecompressionStream('gzip')));return await ds.arrayBuffer();};
+    return cache[key]=new Promise((res,rej)=>fetchGlb(MODELS[key].url).then(buf=>loader.parse(buf,'',g=>{
+      const r=g.scene; if(MODELS[key].zup)r.rotation.x=-Math.PI/2;
+      const outer=new THREE.Group(); outer.add(r); outer.updateMatrixWorld(true);
+      const box=new THREE.Box3().setFromObject(outer), size=box.getSize(new THREE.Vector3()), c=box.getCenter(new THREE.Vector3());
+      r.position.copy(c.negate()); outer.scale.setScalar(4/Math.max(size.x,size.y,size.z));
+      // the level that holds one node per part (skip wrapper nodes such as "world")
+      let inner=r; while(inner.children.length===1&&!inner.children[0].isMesh)inner=inner.children[0];
+      const parts={}; inner.traverse(o=>{if(o.isMesh){o.material=o.material.clone();if(o.material.color)o.material.color.convertSRGBToLinear();o.userData.baseEmissive=o.material.emissive?o.material.emissive.clone():new THREE.Color(0);
+        let p=o; while(p.parent&&p.parent!==inner)p=p.parent; const nm=p.name||o.name; (parts[nm]=parts[nm]||[]).push(o); o.userData.part=nm;}});
+      inner.children.forEach(ch=>{ch.userData.base=ch.position.clone()});
+      res({root:outer,inner,parts});
+    },rej)).catch(rej));
+  }
+  function mkScene(){const sc=new THREE.Scene();sc.add(new THREE.HemisphereLight(0xffffff,0x9aa59e,1.0));const d=new THREE.DirectionalLight(0xffffff,1.1);d.position.set(4,8,6);sc.add(d);const d2=new THREE.DirectionalLight(0xffffff,.45);d2.position.set(-6,3,-4);sc.add(d2);return sc;}
+  function frame(obj,d){const b=new THREE.Box3().setFromObject(obj),sz=b.getSize(new THREE.Vector3()),c=b.getCenter(new THREE.Vector3());const r=sz.length()/2;const dist=r/Math.sin(THREE.MathUtils.degToRad(cam.fov/2))*(d?1.0:0.72);
+    const dir=new THREE.Vector3(...(d||[.55,.75,.95])).normalize(); cam.position.copy(c.clone().add(dir.multiplyScalar(dist))); cam.near=dist/100; cam.far=dist*10; cam.updateProjectionMatrix(); controls.target.copy(c); controls.update();}
+  function setHighlight(name){
+    if(!root)return; picked=name;
+    Object.entries(root.userData.parts).forEach(([nm,ms])=>ms.forEach(m=>{if(!m.material.emissive)return;m.material.emissive.copy(nm===name?new THREE.Color(0x2F6BFF):m.userData.baseEmissive);m.material.emissiveIntensity=nm===name?1:1}));
+    if(infoEl){const inf=infoFor(modelKey,name); if(inf){infoEl.innerHTML=`<div class="ref">${inf[0]}</div><h3>${inf[1]}</h3><p>${inf[2]}</p>${inf[3]?`<p class="detail">${inf[3]}</p>`:''}`}}
+    $$('.chip',host.closest('.slide')).forEach(c=>c.classList.toggle('on',c.dataset.pick===name));
+  }
+  function applyExplode(t){ // t: 0 assembled .. 1 exploded
+    const f=EXPLODE[modelKey]; if(!f)return; const inner=root.userData.inner;
+    inner.children.forEach(ch=>{const e=f(ch.name);const T=1-t;const local=clamp((T-e.t[0])/(e.t[1]-e.t[0]),0,1);const k=1-ease(local);
+      ch.position.set(ch.userData.base.x+e.v[0]*k,ch.userData.base.y+e.v[1]*k,ch.userData.base.z+e.v[2]*k);});
+  }
+  const LAYERS=[['board_body','FR-4（板）'],['board_copper','銅箔'],['board_mask','ソルダーレジスト'],['board_silk','シルク'],['parts','部品']];
+  function applyLayers(t){
+    const inner=root.userData.inner; const gap=0.012; // metres
+    inner.children.forEach(ch=>{let i=LAYERS.findIndex(l=>l[0]===ch.name); if(i<0)i=4; ch.position.set(ch.userData.base.x,ch.userData.base.y+gap*i*ease(t),ch.userData.base.z)});
+    labels.forEach(l=>l.el.style.opacity=t>.15?1:0);
+  }
+  function placeLabels(){
+    if(mode!=='layers'||!labels.length)return; const rect=renderer.domElement.getBoundingClientRect(); const hr=host.getBoundingClientRect(); const sc=hr.width/host.offsetWidth;
+    labels.forEach(l=>{const ch=l.objs[0]; if(!ch)return; const b=new THREE.Box3().setFromObject(ch); const p=new THREE.Vector3(b.max.x,(b.min.y+b.max.y)/2,(b.min.z+b.max.z)/2).project(cam);
+      l.el.style.left=((p.x+1)/2*rect.width/sc)+'px'; l.el.style.top=((1-p.y)/2*rect.height/sc)+'px';});
+  }
+  async function attach(slide){
+    const v=$('.viewer',slide); stopLoop(); labels.forEach(l=>l.el.remove()); labels=[];
+    if(!v){host=null;return}
+    host=v; mode=v.dataset.mode; modelKey=v.dataset.model; infoEl=v.dataset.info?$(v.dataset.info):null; slider=$('[data-slider]',v); spin=mode==='spin';
+    v.appendChild(renderer.domElement); resize();
+    let m; try{m=await load(modelKey)}catch(e){const l=$('.loading',v);if(l)l.textContent='3Dを読み込めませんでした';return}
+    if(host!==v)return; const l=$('.loading',v); if(l)l.remove();
+    scene=mkScene(); root=m.root; root.userData.parts=m.parts; root.userData.inner=m.inner; scene.add(root);
+    m.inner.children.forEach(ch=>ch.position.copy(ch.userData.base)); setHighlight(null);
+    if(mode==='explode'){applyExplode(slider?slider.value/1000:1)}
+    if(mode==='layers'){ const groups={}; m.inner.children.forEach(ch=>{const k=LAYERS.some(x=>x[0]===ch.name)?ch.name:'parts';(groups[k]=groups[k]||[]).push(ch)});
+      LAYERS.forEach(([k,txt])=>{const el=document.createElement('div');el.className='layerlabel';el.textContent=txt;el.style.opacity=0;v.appendChild(el);labels.push({el,objs:groups[k]||[]})}); applyLayers(slider?slider.value/1000:0);}
+    if(mode==='layers'){applyLayers(1);frame(root,[.35,.42,1]);applyLayers(slider?slider.value/1000:0)}else if(mode==='explode'){applyExplode(1);frame(root,[.55,.75,.95]);applyExplode(slider?slider.value/1000:1)}else frame(root);
+    startLoop();
+  }
+  let raf=0,last=0;
+  function loop(ts){raf=requestAnimationFrame(loop); const dt=Math.min(.05,(ts-last)/1000||0); last=ts;
+    if(anim){anim.t+=dt/anim.dur; const k=clamp(anim.t,0,1); const val=anim.from+(anim.to-anim.from)*k; if(slider)slider.value=Math.round(val*1000); (mode==='layers'?applyLayers:applyExplode)(val); if(k>=1){anim=null; const b=$('[data-play]',host); if(b)b.textContent=mode==='layers'?(val>.5?'▶ 重ねる':'▶ 分ける'):(val<.5?'▶ 分解':'▶ 組み立て');}}
+    if(spin&&root&&!reduce)root.rotation.y+=dt*.25;
+    controls.update(); if(scene)renderer.render(scene,cam); placeLabels();}
+  function startLoop(){cancelAnimationFrame(raf);last=performance.now();raf=requestAnimationFrame(loop)}
+  function stopLoop(){cancelAnimationFrame(raf);anim=null}
+  function resize(){if(!host)return; const w=host.clientWidth,h=host.clientHeight; const r=host.getBoundingClientRect(); const sc=r.width/(w||1); renderer.setPixelRatio(Math.min(devicePixelRatio,2)*sc); renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix();}
+  // picking
+  let down=null;
+  renderer.domElement.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];spin=false});
+  renderer.domElement.addEventListener('pointerup',e=>{if(!down||!root||mode==='layers')return; if(Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return;
+    const r=renderer.domElement.getBoundingClientRect(); ptr.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); raycaster.setFromCamera(ptr,cam);
+    const hit=raycaster.intersectObject(root,true).find(h=>h.object.visible); if(hit&&infoEl)setHighlight(hit.object.userData.part);});
+  // controls inside viewer
+  document.addEventListener('input',e=>{if(e.target.matches('[data-slider]')&&host&&host.contains(e.target)&&root){anim=null;(mode==='layers'?applyLayers:applyExplode)(e.target.value/1000)}});
+  document.addEventListener('click',e=>{
+    const p=e.target.closest('.viewer [data-play]'); if(p&&host&&host.contains(p)&&root){const now=slider?slider.value/1000:0; let to=mode==='layers'?(now>.5?0:1):(now<.5?1:0); if(mode==='explode'&&now>=.999)to=0;
+      anim={t:0,from:now,to,dur:reduce?.01:(mode==='layers'?2.2:5.5)}; p.textContent='■ 再生中';}
+    const c=e.target.closest('[data-pick]'); if(c&&host&&root)setHighlight(c.dataset.pick);
+  });
+  return {attach,resize,pick:setHighlight};
+})();
+
+/* ---------------- slide animations ---------------- */
+const anims={};
+function startAnims(el){const k=el.dataset.anim; if(k&&anims[k]&&anims[k].enter)anims[k].enter(el)}
+function stopAnims(el){const k=el.dataset.anim; if(k&&anims[k]&&anims[k].leave)anims[k].leave(el)}
+
+// pipeline
+anims.pipeline=(()=>{let timer=[],el=null;
+  const STEPS=[
+    {n:0,cap:'① カメラボタンを押す',led:['#2E9A55','緑：待機中（押せる）'],snd:'trigger.wav（カシャ）'},
+    {n:1,cap:'② カメラで撮影。画像が Raspberry Pi に届く',led:['#2E9A55','緑：待機中'],snd:'—'},
+    {n:2,cap:'③ 画像をインターネットへ送り、文字を読み取ってもらう',led:['#D9A52B','黄：通信中（赤＋緑）'],snd:'connect.wav（通信中）'},
+    {n:3,cap:'④ 読み取った文字から、声のデータをつくってもらう',led:['#D9A52B','黄：通信中'],snd:'connect.wav'},
+    {n:4,cap:'⑤ スピーカーから読み上げる',led:['#2F6DB5','青：読み上げ中'],snd:'start.wav → 読み上げ → finish.wav'},
+    {n:-1,cap:'⑥ 待機に戻る。次のボタンを待つ',led:['#2E9A55','緑：待機中（押せる）'],snd:'—'}];
+  const X=[120,400,710,1040,1315];
+  function show(i){const s=STEPS[i];$('[data-cap]',el).textContent=s.cap;$('[data-led]',el).setAttribute('fill',s.led[0]);$('[data-ledtxt]',el).textContent=s.led[1];$('[data-snd]',el).textContent=s.snd;
+    $$('[data-node] rect',el).forEach((r,j)=>{r.setAttribute('stroke',j===s.n?'#171A3B':'#E5E5E5');r.setAttribute('stroke-width',j===s.n?6:3)});
+    const d=$('[data-dot]',el); if(s.n>=0){d.setAttribute('cx',X[s.n]);d.setAttribute('opacity',1)}else d.setAttribute('opacity',0);}
+  function play(){timer.forEach(clearTimeout);timer=[];STEPS.forEach((s,i)=>timer.push(setTimeout(()=>show(i),reduce?0:i*1700)))}
+  return {enter(e){el=e;const b=$('[data-play]',el);b.onclick=play},leave(){timer.forEach(clearTimeout)}};})();
+
+// audio path canvas
+anims.audio=(()=>{let el,cv,ctx,raf=0,t0=0,playing=false,jack=false,tp=0;
+  const stagesSp=[['Raspberry Pi','I2S 出力','#111111'],['DAC','PCM5102A','#171A3B'],['音量','VR1','#4A4A4A'],['ジャック','CN1','#4A4A4A'],['アンプ','PAM8304','#171A3B'],['スピーカー','SPK','#171A3B']];
+  const stagesJk=[['Raspberry Pi','I2S 出力','#111111'],['DAC','PCM5102A','#171A3B'],['音量','VR1','#4A4A4A'],['ジャック','CN1','#4A4A4A'],['イヤホン','','#2F6DB5']];
+  function size(){const r=cv.getBoundingClientRect();const w=cv.clientWidth,h=cv.clientHeight;const dpr=Math.min(devicePixelRatio,2)*(r.width/(w||1));cv.width=w*dpr;cv.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+  function draw(ts){raf=requestAnimationFrame(draw);if(playing)tp+=(ts-t0)/1000;t0=ts;const W=cv.clientWidth,H=cv.clientHeight;ctx.clearRect(0,0,W,H);
+    const st=jack?stagesJk:stagesSp;const n=st.length;const bw=Math.min(190,W/n-30),gap=(W-bw*n)/(n-1),by=8,bh=130;const band=H-(by+bh)-44;
+    const prog=playing?((tp*0.35)%1.4):1.4; // signal front position over stages
+    for(let i=0;i<n;i++){const x=i*(bw+gap);const lit=prog*(n)>i;ctx.fillStyle=lit?st[i][2]:'#fff';ctx.strokeStyle=st[i][2];ctx.lineWidth=3;roundRect(x,by,bw,bh,14);ctx.fill();ctx.stroke();
+      ctx.fillStyle=lit?'#fff':'#111111';ctx.font='700 26px "Noto Sans JP",sans-serif';ctx.textAlign='center';ctx.fillText(st[i][0],x+bw/2,by+66);ctx.font='20px "JetBrains Mono",monospace';ctx.fillText(st[i][1],x+bw/2,by+104);
+      if(i<n-1){ctx.strokeStyle='#4A4A4A';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x+bw+6,by+bh/2);ctx.lineTo(x+bw+gap-10,by+bh/2);ctx.stroke();ctx.beginPath();ctx.moveTo(x+bw+gap-10,by+bh/2-8);ctx.lineTo(x+bw+gap-2,by+bh/2);ctx.lineTo(x+bw+gap-10,by+bh/2+8);ctx.fillStyle='#4A4A4A';ctx.fill();}}
+    // waveforms under each segment
+    const wy=by+bh+band*0.45;
+    for(let i=0;i<n-1;i++){const x0=i*(bw+gap)+bw/2,x1=(i+1)*(bw+gap)+bw/2;const lit=prog*n>i+0.5;ctx.save();ctx.globalAlpha=lit?1:.2;ctx.strokeStyle=i===0?'#111111':(i>=3&&!jack?'#171A3B':'#2F6DB5');ctx.lineWidth=3;ctx.beginPath();
+      for(let x=x0;x<=x1;x+=2){const ph=(x/26)-tp*6;let y;if(i===0){y=(Math.sin(ph)>0?-1:1)*18+((Math.floor(x/13)%3===0)?8:0);}else{const a=Math.min(band*0.32,(i===1?36:i===2||i===3?(jack?30:22):70));y=Math.sin(ph)*a}
+        x===x0?ctx.moveTo(x,wy+y):ctx.lineTo(x,wy+y)}ctx.stroke();ctx.restore();
+      ctx.fillStyle='#4A4A4A';ctx.font='19px "Noto Sans JP",sans-serif';ctx.textAlign='center';ctx.fillText(i===0?'デジタル（I2S）':i===1?'アナログ（ラインレベル）':i===2?'分圧で音量を調整':i===3?(jack?'イヤホンへ':'スイッチ経由でアンプへ'):'D級アンプで増幅',(x0+x1)/2,by+bh+band-4);}
+    ctx.textAlign='left';ctx.fillStyle='#4A4A4A';ctx.font='20px "Noto Sans JP",sans-serif';ctx.fillText(jack?'イヤホンを挿すと、ジャック内のスイッチが開き、アンプへの経路が切れる。':'イヤホンがないときは、ジャック内のスイッチが閉じており、信号はアンプへ入る。',0,H-8);}
+  function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+  return {enter(e){el=e;cv=$('[data-audio]',el);ctx=cv.getContext('2d');size();t0=performance.now();cancelAnimationFrame(raf);raf=requestAnimationFrame(draw);
+      $('[data-play]',el).onclick=ev=>{playing=!playing;ev.currentTarget.textContent=playing?'■ 止める':'▶ 再生'};
+      $('[data-toggle-jack]',el).onclick=ev=>{jack=!jack;ev.currentTarget.textContent=jack?'イヤホンを抜く':'イヤホンを挿す';$('[data-jackstate]',el).textContent=jack?'いま：イヤホンあり → スピーカーは鳴らない':'いま：イヤホンなし → スピーカーが鳴る'};
+      addEventListener('resize',size)},
+    leave(){cancelAnimationFrame(raf);removeEventListener('resize',size)}};})();
+
+// pins
+anims.pins=(()=>{const P={1:['pwr','3.3 V','電源（3.3 V）','カメラ基板・DAC のデジタル側へ'],4:['pwr','5 V','電源（5 V）','5V コネクタから Raspberry Pi へ電気を送る'],6:['gnd','GND','GND（0 V）','5V コネクタのマイナス'],9:['gnd','GND','GND（0 V）','デジタルの GND'],11:['btn','GPIO17','カメラボタン','HDMI ケーブル経由でカメラ基板の SW1 へ'],12:['audio','GPIO18','音声 BCK','I2S：ビットのリズム（クロック）'],13:['btn','GPIO27','メインボタン','今のプログラムでは未使用'],15:['btn','GPIO22','サブボタン','読み上げを止める'],16:['btn','GPIO23','上ボタン','未使用'],17:['pwr','3.3 V','電源（3.3 V・アナログ）','DAC のアナログ側へ'],18:['btn','GPIO24','下ボタン','未使用'],19:['led','GPIO10','LED 青','40.2 Ω（R7）経由'],21:['led','GPIO9','LED 赤','40.2 Ω（R8）経由'],23:['led','GPIO11','LED 緑','40.2 Ω（R9）経由'],24:['led','GPIO8','カメラ基板の LED','HDMI ケーブル経由'],25:['gnd','GND','GND（アナログ）','音声用の GND'],35:['audio','GPIO19','音声 LRCK','I2S：左右の切り替え'],39:['gnd','GND','GND（0 V）','デジタルの GND'],40:['audio','GPIO21','音声 DIN','I2S：音のデータ']};
+  let built=false;
+  return {enter(el){const h=$('[data-header]',el);if(!built){built=true;
+    for(let c=0;c<20;c++){for(const r of [2,1]){const n=c*2+r;const b=document.createElement('button');const d=P[n];b.className='pin '+(d?d[0]:'');b.textContent=n;b.setAttribute('aria-label',`${n}番ピン${d?'：'+d[2]:'：未使用'}`);
+      b.onclick=()=>{$$('.pin',h).forEach(x=>x.classList.remove('on'));b.classList.add('on');const i=$('[data-pininfo]',el);i.innerHTML=d?`<div class="ref">物理 ${n} 番 · ${d[1]}</div><h3>${d[2]}</h3><p>${d[3]}</p>`:`<div class="ref">物理 ${n} 番</div><h3>使っていない</h3><p>PHOTON GLASS では何もつながっていない。改造で使える。</p>`};h.appendChild(b)}}}}};})();
+
+// buttons & LED (static handlers)
+(()=>{const s=$('[data-press]')?.closest('.slide');if(!s)return;let pressed=false;const b=$('[data-press]',s);
+  b.onclick=()=>{pressed=!pressed;b.setAttribute('aria-pressed',String(pressed));b.textContent=pressed?'ボタンを離す':'ボタンを押す';$('[data-sw]',s).setAttribute('d',pressed?'M330 150L385 150':'M330 150L380 130');$('[data-gpio]',s).textContent=pressed?'GPIO ＝ 0':'GPIO ＝ 1';$('[data-pressmsg]',s).textContent=pressed?'押している：0 V（0）→ プログラムは「押された」と読む':'離している：3.3 V（1）'};
+  const st={r:false,g:false,b:false};const NAMES={'':'消灯','r':'赤：エラー','g':'緑：待機中','b':'青：読み上げ中','rg':'黄：通信中','rb':'紫（使っていない）','gb':'水色（使っていない）','rgb':'白（使っていない）'};
+  $$('[data-led]',s).forEach(x=>x.onclick=()=>{st[x.dataset.led]=!st[x.dataset.led];x.classList.toggle('on',st[x.dataset.led]);x.setAttribute('aria-pressed',String(st[x.dataset.led]));
+    const c=[st.r?235:30,st.g?205:34,st.b?235:32];if(st.r&&st.g&&!st.b){c[0]=240;c[1]=196;c[2]=40} if(!st.r&&st.g&&!st.b){c[0]=46;c[1]=180;c[2]=85} if(st.b&&!st.r&&!st.g){c[0]=47;c[1]=109;c[2]=220} if(st.r&&!st.g&&!st.b){c[0]=225;c[1]=60;c[2]=50}
+    const on=st.r||st.g||st.b;const bulb=$('[data-bulb]',s);bulb.style.background=on?`rgb(${c})`:'#2a2f2c';bulb.style.boxShadow=on?`0 0 60px 18px rgba(${c},.55), inset 0 -10px 30px rgba(0,0,0,.2)`:'inset 0 -10px 30px rgba(0,0,0,.4)';
+    $('[data-ledmsg]',s).textContent=NAMES[(st.r?'r':'')+(st.g?'g':'')+(st.b?'b':'')]});})();
+
+// schematic
+(()=>{const s=$('[data-sch]')?.closest('.slide');if(!s)return;const w=$('.schwrap',s),svg=$('[data-sch]',s);
+  const FULL=[0,0,341.173,264.947];let vb=FULL.slice(),zr=0;
+  const zoom=to=>{cancelAnimationFrame(zr);const from=vb.slice(),t0=performance.now(),D=reduce?0:450;
+    const step=now=>{const k=D?ease(clamp((now-t0)/D,0,1)):1;vb=from.map((v,i)=>v+(to[i]-v)*k);svg.setAttribute('viewBox',vb.join(' '));if(k<1)zr=requestAnimationFrame(step)};zr=requestAnimationFrame(step)};
+  $$('[data-b]',s).forEach(b=>b.onclick=()=>{const on=!b.classList.contains('on');$$('[data-b]',s).forEach(x=>x.classList.remove('on'));$$('[data-blk]',s).forEach(g=>g.classList.remove('on'));
+    w.classList.toggle('sel',on);if(on){b.classList.add('on');const g=$(`[data-blk="${b.dataset.b}"]`,s);g.classList.add('on');const r=$('rect',g);
+      const x=+r.getAttribute('x'),y=+r.getAttribute('y'),wd=+r.getAttribute('width'),ht=+r.getAttribute('height'),p=6;zoom([x-p,y-p,wd+2*p,ht+2*p])}else zoom(FULL)});
+  $$('[data-blk]',s).forEach(g=>{g.style.cursor='pointer';g.onclick=()=>$(`[data-b="${g.dataset.blk}"]`,s).click()});})();
+
+// repo tree
+(()=>{const T={
+  readme:['README.md','最初に読むページ','フォルダの一覧、はじめての人へのリンク、質問の仕方、ライセンスの表。','すべての入口。'],
+  docs:['docs/','手順書','BUILD_GUIDE.md（作る順番）、SETUP_RASPBERRY_PI.md（Pi の準備）、parts_list.md（全部品とデータシートの照合）。','作るときに、いちばん読むフォルダ。'],
+  hardware:['hardware/','基板の設計データ','KiCad・Eagle のデータ、ガーバー、部品表（BOM）・部品の位置（CPL）。JLCPCB_ORDERING.md に発注の手順。','基板を発注する・設計を変えるとき。'],
+  mainb:['hardware/main-board/','メイン基板 OG19AWv2','kicad/・eagle/・gerber/・jlcpcb-assembly/・images/','79 × 42 mm、2層。'],
+  camb:['hardware/camera-board/','カメラ基板 OG19 PC','kicad/・eagle/・gerber/・jlcpcb-assembly/','39.3 × 17.2 mm、2層。'],
+  enclosure:['enclosure/','筐体（3Dプリント）','STEP（CAD 用。本体は Fusion の元データ .f3d も）、STL・3MF（印刷用）、印刷設定と組み立て手順。','印刷する・形を変えるとき。'],
+  mbody:['enclosure/main-body/','本体の筐体','ボディ前面・背面・側面、メインボタン、サブボタン、状態ランプのレンズ。Fusion の元データ（.f3d）、STEP、印刷用の STL・3MF、Bambu Lab A1 の印刷設定、組み立て手順。','黒の PETG（レンズだけ透明の PETG）。'],
+  cunit:['enclosure/camera-unit/','カメラユニットの筐体','src/camera_case.py（CadQuery）で数値から作り直せる。','PETG。アタッチメントだけサポートあり。'],
+  usb:['enclosure/usb-power-cable/','電源ケーブル','モバイルバッテリーから 5V コネクタへのケーブルの作り方と、USB プラグのカバー。','つなぐ前に必ず +/− を確認。'],
+  software:['software/','プログラム','main_async.py（普段使う）、main_seq.py（学ぶ用）、効果音、テスト、setup/（準備を自動でやるスクリプト）。','Raspberry Pi で動かすもの。'],
+  charter:['CHARTER.md · LICENSE','憲法とライセンス','理念と利用、名称、特許（CHARTER.md）。ライセンスの全文。','使っていい範囲を確かめるとき。'],
+ };const s=$('[data-tree]')?.closest('.slide');if(!s)return;$$('[data-k]',s).forEach(b=>b.onclick=()=>{$$('[data-k]',s).forEach(x=>x.classList.remove('on'));b.classList.add('on');const d=T[b.dataset.k];$('[data-treeinfo]',s).innerHTML=`<div class="ref">${d[0]}</div><h3>${d[1]}</h3><p>${d[2]}</p><p class="detail">${d[3]}</p>`});})();
+
+/* ---------------- boot ---------------- */
+addEventListener('resize',fit);
+document.addEventListener('fullscreenchange',()=>setTimeout(fit,50));
+const m=location.hash.match(/slide-(\d+)/); fit(); go(m?+m[1]-1:0,false);
+})();
+</script>
+
+</body></html>
